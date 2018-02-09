@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.test.dao.XcTestQuestionDao">
+    
+	<sql id="xcTestQuestionColumns">
+		a.question_id AS "questionId",
+		a.question_details AS "questionDetails",
+		a.test_id AS "testId",
+		a.question_num AS "questionNum",
+		a.create_time AS "createTime"
+	</sql>
+	
+	<sql id="xcTestQuestionJoins">
+	</sql>
+    
+	<select id="get" resultType="XcTestQuestion">
+		SELECT 
+			<include refid="xcTestQuestionColumns"/>
+		FROM xc_test_question a
+		<include refid="xcTestQuestionJoins"/>
+		WHERE a.question_id = #{questionId}
+	</select>
+	
+	<select id="findList" resultType="XcTestQuestion">
+		SELECT 
+			<include refid="xcTestQuestionColumns"/>
+		FROM xc_test_question a
+		<include refid="xcTestQuestionJoins"/>
+		<where>
+			<if test="testId != null and testId != ''">
+				a.test_id = #{testId} 
+			</if>
+			<if test="questionDetails != null and questionDetails != ''">
+				 and a.question_details like CONCAT('%',#{questionDetails},'%') 
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="XcTestQuestion">
+		SELECT 
+			<include refid="xcTestQuestionColumns"/>
+		FROM xc_test_question a
+		<include refid="xcTestQuestionJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO xc_test_question
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="questionDetails != null and questionDetails != ''">
+				question_details,
+			</if>
+			<if test="testId != null and testId != ''">
+				test_id,
+			</if>
+			<if test="questionNum != null and questionNum != ''">
+				question_num,
+			</if>
+			create_time
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="questionDetails != null and questionDetails != ''">
+				#{questionDetails},
+			</if>
+			<if test="testId != null and testId != ''">
+				#{testId},
+			</if>
+			<if test="questionNum != null and questionNum != ''">
+				#{questionNum},
+			</if>
+				now()
+		</trim>
+	</insert>
+	
+	<update id="update">
+		UPDATE xc_test_question 
+		<set>
+			<if test="questionDetails != null and questionDetails != ''">
+				question_details = #{questionDetails},
+			</if>
+			<if test="testId != null and testId != ''">
+				test_id = #{testId}
+			</if>
+			<if test="questionNum != null and questionNum != ''">
+				question_num = #{questionNum},
+			</if>
+		</set>
+		WHERE question_id = #{questionId}
+	</update>
+	
+	<delete id="delete">
+		delete from xc_test_question  
+		WHERE question_id = #{questionId}
+	</delete>
+	
+	
+	
+	<select id="selectCount" resultType="Integer">
+		SELECT count(*)
+		FROM xc_test_question a
+		where a.test_id = #{testId}
+		</select>
+		
+		
+	<select id="selectNew" resultType="XcTestQuestion"	>
+		select
+		<include refid="xcTestQuestionColumns"/>
+		from xc_test_question a
+		where a.test_id = #{testId} 
+		order by a.create_time  desc
+		limit 1
+	</select>
+</mapper>

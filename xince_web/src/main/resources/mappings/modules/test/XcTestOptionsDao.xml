@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.test.dao.XcTestOptionsDao">
+    
+	<sql id="xcTestOptionsColumns">
+		a.options_id AS "optionsId",
+		a.options_keyword AS "optionsKeyword",
+		a.options_details AS "optionsDetails",
+		a.options_point AS "optionsPoint",
+		a.test_question_id AS "testQuestionId",
+		a.create_time AS "createTime"
+	</sql>
+	
+	<sql id="xcTestOptionsJoins">
+	</sql>
+	<select id="get" resultType="XcTestOptions">
+		SELECT 
+			<include refid="xcTestOptionsColumns"/>
+		FROM xc_test_options a
+		<include refid="xcTestOptionsJoins"/>
+		WHERE a.options_id = #{optionsId}
+	</select>
+	
+	<select id="findList" resultType="XcTestOptions">
+		SELECT 
+			<include refid="xcTestOptionsColumns"/>
+		FROM xc_test_options a
+		<include refid="xcTestOptionsJoins"/>
+		<where>
+			<if test="testQuestionId != null and testQuestionId != ''">
+				a.test_question_id = #{testQuestionId}
+			</if>
+			<if test="optionsDetails != null and optionsDetails != ''">
+				and a.options_details like CONCAT('%',#{optionsDetails},'%')
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="XcTestOptions">
+		SELECT 
+			<include refid="xcTestOptionsColumns"/>
+		FROM xc_test_options a
+		<include refid="xcTestOptionsJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO xc_test_options
+		<trim prefix="("  suffix=")" suffixOverrides=",">
+			<if test="optionsKeyword != null and optionsKeyword != ''">
+				options_keyword,
+			</if>
+			<if test="optionsDetails != null and optionsDetails != ''">
+				options_details,
+			</if>
+			<if test="optionsPoint != null and optionsPoint != ''">
+				options_point,
+			</if>
+			<if test="testQuestionId != null and testQuestionId != ''">
+				test_question_id,
+			</if>
+			create_time
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="optionsKeyword != null and optionsKeyword != ''">
+				#{optionsKeyword},
+			</if>
+			<if test="optionsDetails != null and optionsDetails != ''">
+				#{optionsDetails},
+			</if>
+			<if test="optionsPoint != null and optionsPoint != ''">
+				#{optionsPoint},
+			</if>
+			<if test="testQuestionId != null and testQuestionId != ''">
+				#{testQuestionId},
+			</if>
+				now()
+		</trim>
+	</insert>
+	
+	<update id="update">
+		UPDATE xc_test_options 
+		<set>
+			<if test="optionsKeyword != null and optionsKeyword != ''">
+				options_keyword = #{optionsKeyword},
+			</if>
+			<if test="optionsDetails != null and optionsDetails != ''">
+				options_details = #{optionsDetails},
+			</if>
+			<if test="optionsPoint != null and optionsPoint != ''">
+				options_point = #{optionsPoint},
+			</if>
+			<if test="testQuestionId != null and testQuestionId != ''">
+				test_question_id = #{testQuestionId}
+			</if>
+		</set>
+		WHERE options_id = #{optionsId}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM xc_test_options
+		WHERE options_id = #{optionsId}
+	</delete>	
+	
+	<select id="selectCount" resultType="Integer">
+		select count(*) from xc_test_options
+		where test_question_id = #{testQuestionId}
+	</select>
+	
+</mapper>

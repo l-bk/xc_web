@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.type.dao.XcModuleDao">
+    
+	<sql id="xcModuleColumns">
+		a.module_id AS "moduleId",
+		a.module_name AS "moduleName",
+		a.module_type AS "moduleType",
+		a.test_id AS "testId",
+		a.pic_id AS "picId",
+		a.module_status AS "moduleStatus"
+	</sql>
+	
+	<sql id="xcModuleJoins">
+	</sql>
+    
+	<select id="get" resultType="XcModule">
+		SELECT 
+			<include refid="xcModuleColumns"/>
+		FROM xc_module a
+		<include refid="xcModuleJoins"/>
+		WHERE a.module_id = #{moduleId}
+	</select>
+	
+	<select id="findList" resultType="XcModule">
+		SELECT 
+			<include refid="xcModuleColumns"/>
+		FROM xc_module a
+		<include refid="xcModuleJoins"/>
+		<where>
+			
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="XcModule">
+		SELECT 
+			<include refid="xcModuleColumns"/>
+		FROM xc_module a
+		<include refid="xcModuleJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO xc_module
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="moduleName != null and moduleName != ''">
+				module_name,
+			</if>
+			<if test="moduleType != null and moduleType != ''">
+				module_type,
+			</if>
+			<if test="testId != null and testId != ''">
+				test_id,
+			</if>
+			<if test="picId != null and picId != ''">
+				pic_id,
+			</if>
+			<if test="moduleStatus != null and moduleStatus !=''">
+				module_status,
+			</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="moduleName != null and moduleName != ''">
+				#{moduleName},
+			</if>
+			<if test="moduleType != null and moduleType != ''">
+				#{moduleType},
+			</if>
+			<if test="testId != null and testId != ''">
+				#{testId},
+			</if>
+			<if test="picId != null and picId != ''">
+				#{picId},
+			</if>
+			<if test="moduleStatus != null and moduleStatus !=''">
+				#{moduleStatus}
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="update">
+		UPDATE xc_module 
+		<set>
+			<if test="moduleName != null and moduleName != ''">
+				module_name = #{moduleName},
+			</if>
+			<if test="moduleType != null and moduleType != ''">
+				module_type = #{moduleType},
+			</if>
+			<if test="testId != null and testId != ''">
+				test_id = #{testId},
+			</if>
+			<if test="picId != null and picId != ''">
+				pic_id = #{picId},
+			</if>
+			<if test="moduleStatus != null and moduleStatus !=''">
+				module_status = #{moduleStatus}
+			</if>
+		</set>
+		WHERE module_id = #{moduleId}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM xc_module
+		WHERE module_id = #{moduleId}
+	</update>
+	
+</mapper>

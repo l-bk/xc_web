@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.pic.dao.XcPictureDao">
+    
+	<sql id="xcPictureColumns">
+		a.pic_id AS "picId",
+		a.pic_path AS "picPath",
+		a.pic_type AS "picType",
+		a.pic_status AS "picStatus",
+		a.pic_name AS "picName"
+	</sql>
+	
+	<sql id="xcPictureJoins">
+	</sql>
+    
+	<select id="get" resultType="XcPicture">
+		SELECT 
+			<include refid="xcPictureColumns"/>
+		FROM xc_picture a
+		<include refid="xcPictureJoins"/>
+		WHERE a.pic_id = #{picId}
+	</select>
+	
+	<select id="findList" resultType="XcPicture">
+		SELECT 
+			<include refid="xcPictureColumns"/>
+		FROM xc_picture a
+		<include refid="xcPictureJoins"/>
+		<where>
+			<if test="picType != null and picType != ''">
+				a.pic_type = #{picType}
+			</if>
+			<if test="picStatus != null and picStatus != ''">
+				and a.pic_status = #{picStatus}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="XcPicture">
+		SELECT 
+			<include refid="xcPictureColumns"/>
+		FROM xc_picture a
+		<include refid="xcPictureJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert" >
+		INSERT INTO xc_picture
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="picPath != null">
+				pic_path,
+			</if>
+			<if test="picType != null">
+				pic_type,
+			</if>
+			<if test="picStatus != null">
+				pic_status,
+			</if>
+			<if test="picName != null and picName != ''">
+				pic_name,
+			</if>
+		</trim>
+		<trim prefix="value(" suffix=")" suffixOverrides=",">
+			<if test="picPath != null">
+				#{picPath},
+			</if>
+			<if test="picType != null">
+				#{picType},
+			</if>
+			<if test="picStatus != null">
+				#{picStatus},
+			</if>
+			<if test="picName != null and picName != ''">
+				#{picName},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="update">
+		UPDATE xc_picture a
+		<set>
+			<if test="picPath != null">
+				pic_path = #{picPath},
+			</if>
+			<if test="picType != null">
+				pic_type = #{picType},
+			</if>
+			<if test="picStatus != null">
+				pic_status = #{picStatus},
+			</if>
+			<if test="picName != null and picName != ''">
+				pic_name = #{picName},
+			</if>
+		</set>
+		
+		WHERE a.pic_id = #{picId}
+	</update>
+	
+	<delete id="delete">
+		delete  from xc_picture 
+		WHERE pic_id = ${picId}
+	</delete>
+	
+</mapper>

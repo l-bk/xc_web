@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.test.dao.XcTestInfoDao">
+
+    
+	<sql id="xcTestInfoColumns">
+		a.test_id AS "testId",
+		a.test_title AS "testTitle",
+		a.test_subject AS "testSubject",
+		a.test_pic AS "testPic",
+		a.test_type AS "testType",
+		a.pay_flag AS "payFlag",
+		a.test_presentation AS "testPresentation",
+		a.test_num AS "testNum",
+		a.test_use_time AS "testUseTime",
+		a.test_price AS "testPrice",
+		a.test_preferential_price AS "testPreferentialPrice",
+		a.test_report_length AS "testReportLength",
+		a.test_prompt AS "testPrompt",
+		a.del_flag AS "delFlag",
+		a.create_time AS "createTime"
+	</sql>
+	
+	<sql id="xcTestInfoJoins">
+	</sql>
+    
+	<select id="get" resultType="com.thinkgem.jeesite.modules.test.entity.XcTestInfo">
+		SELECT 
+			<include refid="xcTestInfoColumns"/>
+		FROM xc_test_info a
+		<include refid="xcTestInfoJoins"/>
+		WHERE a.test_id = #{testId}
+	</select>
+	
+	<select id="findList" resultType="com.thinkgem.jeesite.modules.test.entity.XcTestInfo">
+		SELECT 
+			<include refid="xcTestInfoColumns"/>
+		FROM xc_test_info a
+		<include refid="xcTestInfoJoins"/>
+		<where>
+			<if test="testSubject != null">
+				test_subject like concat('%',#{testSubject},'%')
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="com.thinkgem.jeesite.modules.test.entity.XcTestInfo">
+		SELECT 
+			<include refid="xcTestInfoColumns"/>
+		FROM xc_test_info a
+		<include refid="xcTestInfoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO xc_test_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="testTitle != null and testTitle != ''">
+				test_title,
+			</if>
+			<if test="testSubject != null and testSubject != ''">
+				test_subject,
+			</if>
+			<if test="testPic != null and testPic != ''">
+				test_pic,
+			</if>
+			<if test="testType != null  and testType != ''">
+				test_type,
+			</if>
+			<if test="payFlag != null  and payFlag != ''  ">
+				pay_flag,
+			</if>
+			<if test="testPresentation != null and testPresentation != ''">
+				test_presentation,
+			</if>
+			<if test="testNum != null and testNum != '' ">
+				test_num,
+			</if>
+			<if test="testUseTime != null and testUseTime != ''  ">
+				test_use_time,
+			</if>
+			<if test="testPrice != null and testPrice != ''">
+				test_price,
+			</if>
+			<if test="testPreferentialPrice != null and testPreferentialPrice != ''">
+				test_preferential_price,
+			</if>
+			<if test="testReportLength != null and testReportLength != ''">
+				test_report_length,
+			</if>
+			<if test="testPrompt != null and testPrompt != ''">
+				test_prompt,
+			</if>
+			<if test="delFlag != null and delFlag != '' ">
+				del_flag,
+			</if>
+				create_time,
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="testTitle != null and testTitle != ''">
+				#{testTitle},
+			</if>
+			<if test="testSubject != null and testSubject != ''">
+				#{testSubject},
+			</if>
+			<if test="testPic != null and testPic != ''">
+				#{testPic},
+			</if>
+			<if test="testType != null and testType != ''">
+				#{testType},
+			</if>
+			<if test="payFlag != null and payFlag != ''">
+				#{payFlag},
+			</if>
+			<if test="testPresentation != null and testPresentation != ''">
+				#{testPresentation},
+			</if>
+			<if test="testNum != null and testNum != ''">
+				#{testNum},
+			</if>
+			<if test="testUseTime != null and testUseTime != ''">
+				#{testUseTime},
+			</if>
+			<if test="testPrice != null and testPrice != ''">
+				#{testPrice},
+			</if>
+			<if test="testPreferentialPrice != null and testPreferentialPrice != ''">
+				#{testPreferentialPrice},
+			</if>
+			<if test="testReportLength != null and testReportLength != ''">
+				#{testReportLength},
+			</if>
+			<if test="testPrompt != null and testPrompt != ''">
+				#{testPrompt},
+			</if>
+			<if test="delFlag != null and delFlag != ''">
+				#{delFlag},
+			</if>
+				now(),
+		</trim>	
+	</insert>
+	
+	<update id="update">
+		UPDATE xc_test_info 
+		<set>
+			<if test="testTitle != null and testTitle != ''">
+				test_title = #{testTitle},
+			</if>
+			<if test="testSubject != null and testSubject != ''">
+				test_subject = #{testSubject},
+			</if>
+			<if test="testPic != null and testPic != ''" >
+				test_pic = #{testPic},
+			</if>
+			<if test="testType != null and testType != ''">
+				test_type = #{testType},
+			</if>
+			<if test="payFlag != null and payFlag !=''">
+				pay_flag = #{payFlag},
+			</if>
+			<if test="testPresentation != null and testPresentation != ''">
+				test_presentation = #{testPresentation},
+			</if>
+			<if test="testNum != null and testNum != ''">
+				test_num = #{testNum},
+			</if>
+			<if test="testUseTime != null and testUseTime != ''">
+				test_use_time = #{testUseTime},
+			</if>
+			<if test="testPrice != null and testPrice != ''">
+				test_price = #{testPrice},
+			</if>
+			<if test="testPreferentialPrice != null and testPreferentialPrice != ''">
+				test_preferential_price = #{testPreferentialPrice},
+			</if>
+			<if test="testReportLength != null and testReportLength != ''">
+				test_report_length = #{testReportLength},
+			</if>
+			<if test="testPrompt != null and testPrompt != ''">
+				test_prompt = #{testPrompt},
+			</if>
+			<if test="delFlag != null and delFlag != ''">
+				del_flag = #{delFlag},
+			</if>
+		</set>
+		WHERE test_id = #{testId}
+	</update>
+	
+	<delete id="delete">
+		delete from xc_test_info  
+		WHERE test_id = #{testId}
+	</delete>
+	
+	<select id="selectByCreateTime" resultType="com.thinkgem.jeesite.modules.test.entity.XcTestInfo">
+		SELECT 
+			<include refid="xcTestInfoColumns"/>
+		FROM xc_test_info a
+		order by a.create_time desc  
+		limit 1
+	</select>
+</mapper>
