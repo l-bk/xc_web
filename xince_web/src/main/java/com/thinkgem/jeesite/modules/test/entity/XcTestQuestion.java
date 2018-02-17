@@ -26,6 +26,8 @@ public class XcTestQuestion extends DataEntity<XcTestQuestion> {
 	private String options;//选项全部内容
 	private String type;//操作类型
 	private Date createTime;
+	private BigDecimal skipNum;
+	private String ifSkip;
 	
 	public XcTestQuestion() {
 		super();
@@ -97,6 +99,22 @@ public class XcTestQuestion extends DataEntity<XcTestQuestion> {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public BigDecimal getSkipNum() {
+		return skipNum;
+	}
+
+	public void setSkipNum(BigDecimal skipNum) {
+		this.skipNum = skipNum;
+	}
+
+	public String getIfSkip() {
+		return ifSkip;
+	}
+
+	public void setIfSkip(String ifSkip) {
+		this.ifSkip = ifSkip;
 	}
 	
 	

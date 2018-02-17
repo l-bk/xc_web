@@ -55,4 +55,9 @@ public class XcTestOptionsService extends CrudService<XcTestOptionsDao, XcTestOp
 	public int selectCount(String testQuestionId) {
 		return optionsDao.selectCount(testQuestionId);
 	}
+	
+	@Transactional(readOnly = false)
+	public void deleteByQuestionId(String questionId) {
+		optionsDao.deleteByQuestionId(questionId);
+	}
 }

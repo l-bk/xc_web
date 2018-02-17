@@ -15,4 +15,5 @@ import com.thinkgem.jeesite.modules.test.entity.XcTestOptions;
 @MyBatisDao
 public interface XcTestOptionsDao extends CrudDao<XcTestOptions> {
 	int selectCount(String testQuestionId);
+	void deleteByQuestionId(String questionId);
 }

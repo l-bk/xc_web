@@ -62,7 +62,7 @@
 				<td>
 				<shiro:hasPermission name="test:xcTestInfo:edit">
     				<a href="${ctx}/test/xcTestInfo/form?testId=${xcTestInfo.testId}">修改</a>
-					<a href="${ctx}/test/xcTestInfo/delete?testId=${xcTestInfo.testId}" onclick="return confirmx('确认要删除该测试模块吗？', this.href)">删除</a>
+					<a href="${ctx}/test/xcTestInfo/delete?testId=${xcTestInfo.testId}" onclick="return confirmx('确认要删除该测试数据以及问题结果吗？', this.href)">删除</a>
 				</shiro:hasPermission>
 				<br/>
 				<shiro:hasPermission name="test:xcTestQuestion:view">

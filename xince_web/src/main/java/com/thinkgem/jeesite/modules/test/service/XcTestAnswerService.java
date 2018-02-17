@@ -55,4 +55,9 @@ public class XcTestAnswerService extends CrudService<XcTestAnswerDao, XcTestAnsw
 	public XcTestAnswer selectNew(XcTestAnswer xcTestAnswer){
 		return answerDao.selectNew(xcTestAnswer);
 	}
+	
+	@Transactional(readOnly=false)
+	public int deleteByTestId(String testId){
+		return answerDao.deleteByTestId(testId);
+	}
 }

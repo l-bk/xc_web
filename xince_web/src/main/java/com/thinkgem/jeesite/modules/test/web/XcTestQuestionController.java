@@ -137,6 +137,7 @@ public class XcTestQuestionController extends BaseController {
 	@RequestMapping(value = "delete")
 	public String delete(XcTestQuestion xcTestQuestion, RedirectAttributes redirectAttributes) {
 		xcTestQuestionService.delete(xcTestQuestion);
+		optionsService.deleteByQuestionId(xcTestQuestion.getQuestionId());
 		addMessage(redirectAttributes, "删除测试问题成功");
 		return "redirect:"+Global.getAdminPath()+"/test/xcTestQuestion/?repage&testId="+xcTestQuestion.getTestId();
 	}

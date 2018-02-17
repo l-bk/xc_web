@@ -15,4 +15,5 @@ import com.thinkgem.jeesite.modules.test.entity.XcTestAnswer;
 @MyBatisDao
 public interface XcTestAnswerDao extends CrudDao<XcTestAnswer> {
 	XcTestAnswer selectNew(XcTestAnswer xcTestAnswer);
+	int deleteByTestId(String testId);
 }

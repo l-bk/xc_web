@@ -123,4 +123,8 @@
 		where test_question_id = #{testQuestionId}
 	</select>
 	
+	<delete id="deleteByQuestionId">
+		delete from xc_test_options
+		where test_question_id = #{testQuestionId}
+	</delete>
 </mapper>

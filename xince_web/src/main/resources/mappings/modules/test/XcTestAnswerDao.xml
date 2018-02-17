@@ -175,4 +175,9 @@
 		limit 1
 	</select>
 	
+	<delete id="deleteByTestId">
+		delete from xc_test_answer
+		where test_id = #{testId}
+	</delete>
+	
 </mapper>

@@ -7,7 +7,9 @@
 		a.question_details AS "questionDetails",
 		a.test_id AS "testId",
 		a.question_num AS "questionNum",
-		a.create_time AS "createTime"
+		a.create_time AS "createTime",
+		a.if_skip AS "ifSkip",
+		a.skip_num AS "skipNum"
 	</sql>
 	
 	<sql id="xcTestQuestionJoins">
@@ -72,6 +74,12 @@
 			<if test="questionNum != null and questionNum != ''">
 				question_num,
 			</if>
+				<if test="ifSkip != null and ifSkip != ''">
+				if_skip,
+			</if>
+			<if test="skipNum != null and skipNum != ''">
+				skip_num,
+			</if>
 			create_time
 		</trim>
 		<trim prefix="values(" suffix=")" suffixOverrides=",">
@@ -83,6 +91,12 @@
 			</if>
 			<if test="questionNum != null and questionNum != ''">
 				#{questionNum},
+			</if>
+			<if test="ifSkip != null and ifSkip != ''">
+				#{ifSkip},
+			</if>
+			<if test="skipNum != null and skipNum != ''">
+				#{skipNum},
 			</if>
 				now()
 		</trim>
@@ -99,6 +113,12 @@
 			</if>
 			<if test="questionNum != null and questionNum != ''">
 				question_num = #{questionNum},
+			</if>
+				<if test="ifSkip != null and ifSkip != ''">
+				if_skip = #{ifSkip},
+			</if>
+			<if test="skipNum != null and skipNum != ''">
+				skip_num = #{skipNum},
 			</if>
 		</set>
 		WHERE question_id = #{questionId}

@@ -3,6 +3,8 @@
  */
 package com.thinkgem.jeesite.modules.test.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,7 +22,11 @@ import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.test.entity.XcTestInfo;
+import com.thinkgem.jeesite.modules.test.entity.XcTestQuestion;
+import com.thinkgem.jeesite.modules.test.service.XcTestAnswerService;
 import com.thinkgem.jeesite.modules.test.service.XcTestInfoService;
+import com.thinkgem.jeesite.modules.test.service.XcTestOptionsService;
+import com.thinkgem.jeesite.modules.test.service.XcTestQuestionService;
 
 /**
  * 测试模块Controller
@@ -33,6 +39,15 @@ public class XcTestInfoController extends BaseController {
 
 	@Autowired
 	private XcTestInfoService xcTestInfoService;
+	
+	@Autowired
+	private XcTestAnswerService answerService;
+	
+	@Autowired 
+	private XcTestQuestionService questionService;
+	
+	@Autowired
+	private XcTestOptionsService optionsService;
 	
 	@ModelAttribute
 	public XcTestInfo get(@RequestParam(required=false) String id) {
@@ -85,6 +100,17 @@ public class XcTestInfoController extends BaseController {
 	@RequestMapping(value = "delete")
 	public String delete(XcTestInfo xcTestInfo, RedirectAttributes redirectAttributes) {
 		xcTestInfoService.delete(xcTestInfo);
+		XcTestQuestion question =new XcTestQuestion();
+		question.setTestId(xcTestInfo.getTestId());
+		List<XcTestQuestion> questionList= questionService.findList(question);
+		for(XcTestQuestion ques :questionList){
+			XcTestQuestion newQues =new XcTestQuestion();
+			newQues.setQuestionId(ques.getQuestionId());
+			questionService.delete(newQues);
+			optionsService.deleteByQuestionId(ques.getQuestionId());
+			
+		}
+		answerService.deleteByTestId(xcTestInfo.getTestId());
 		addMessage(redirectAttributes, "删除测试模块成功");
 		return "redirect:"+Global.getAdminPath()+"/test/xcTestInfo/?repage";
 	}
