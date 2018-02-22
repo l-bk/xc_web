@@ -26,7 +26,7 @@
 		<label>选项内容 ：</label>
 		<form:input path="optionsDetails" htmlEscape="false"/>
 		<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"  style="margin-left:20px;"/>
-		<input id="btnUpdate" class="btn btn-primary" type="button" value="查询"  style="margin-left:20px;"/>
+		<!-- <input id="btnUpdate" class="btn btn-primary" type="button" value="查询"  style="margin-left:20px;"/> -->
 	</form:form>
 	<sys:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed" style="width:80%;">
@@ -42,7 +42,14 @@
 		<c:forEach items="${page.list}" var="xcTestOptions">
 			<tr>
 				<td>${xcTestOptions.optionsKeyword }</td>
-				<td>${xcTestOptions.optionsDetails }</td>
+				<td>
+				<c:if test="${xcTestOptions.ifSkip == 0 }">
+					${xcTestOptions.optionsDetails }
+				</c:if>
+				<c:if test="${xcTestOptions.ifSkip == 1 }">
+					跳转到第 &nbsp;${xcTestOptions.skipNum}&nbsp;题
+				</c:if>
+				</td>
 				<td>${xcTestOptions.optionsPoint }</td>
 				<shiro:hasPermission name="test:xcTestOptions:edit"><td>
     				<a href="${ctx}/test/xcTestOptions/form?id=${xcTestOptions.optionsId}">修改</a>

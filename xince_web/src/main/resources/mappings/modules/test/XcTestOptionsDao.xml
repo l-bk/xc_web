@@ -8,7 +8,9 @@
 		a.options_details AS "optionsDetails",
 		a.options_point AS "optionsPoint",
 		a.test_question_id AS "testQuestionId",
-		a.create_time AS "createTime"
+		a.create_time AS "createTime",
+		a.if_skip AS "ifSkip",
+		a.skip_question_id AS "skipQuestionId"
 	</sql>
 	
 	<sql id="xcTestOptionsJoins">
@@ -75,6 +77,12 @@
 			<if test="testQuestionId != null and testQuestionId != ''">
 				test_question_id,
 			</if>
+			<if test="ifSkip != null and ifSkip != ''">
+				if_skip,
+			</if>
+			<if test="skipQuestionId != null and skipQuestionId != ''">
+				skip_question_id,
+			</if>
 			create_time
 		</trim>
 		<trim prefix="values(" suffix=")" suffixOverrides=",">
@@ -89,6 +97,12 @@
 			</if>
 			<if test="testQuestionId != null and testQuestionId != ''">
 				#{testQuestionId},
+			</if>
+			<if test="ifSkip != null and ifSkip != ''">
+				#{ifSkip},
+			</if>
+			<if test="skipQuestionId != null and skipQuestionId != ''">
+				#{skipQuestionId},
 			</if>
 				now()
 		</trim>
@@ -107,7 +121,13 @@
 				options_point = #{optionsPoint},
 			</if>
 			<if test="testQuestionId != null and testQuestionId != ''">
-				test_question_id = #{testQuestionId}
+				test_question_id = #{testQuestionId},
+			</if>
+			<if test="ifSkip != null and ifSkip != ''">
+				if_skip = #{ifSkip},
+			</if>
+			<if test="skipQuestionId != null and skipQuestionId != ''">
+				skip_question_id = #{skipQuestionId},
 			</if>
 		</set>
 		WHERE options_id = #{optionsId}

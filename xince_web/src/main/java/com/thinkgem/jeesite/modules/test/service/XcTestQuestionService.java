@@ -57,4 +57,14 @@ public class XcTestQuestionService extends CrudService<XcTestQuestionDao, XcTest
 	public XcTestQuestion selectNew(XcTestQuestion xcTestQuestion){
 		return questionDao.selectNew(xcTestQuestion);
 	}
+	
+	@Transactional(readOnly= false)
+	public int selectCount(String testId){
+		return questionDao.selectCount(testId);
+	}
+	
+	@Transactional(readOnly=false)
+	public XcTestQuestion selectByQuesNumAndTestId(XcTestQuestion xcTestQuestion){
+		return questionDao.selectByQuesNumAndTestId(xcTestQuestion);
+	}
 }

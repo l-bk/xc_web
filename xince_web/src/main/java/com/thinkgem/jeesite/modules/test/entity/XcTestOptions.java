@@ -3,6 +3,7 @@
  */
 package com.thinkgem.jeesite.modules.test.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import org.hibernate.validator.constraints.Length;
@@ -24,7 +25,9 @@ public class XcTestOptions extends DataEntity<XcTestOptions> {
 	private String testQuestionId;		// 问题id
 	private Date createTime;
 	private Integer num;
-	
+	private String ifSkip;
+	private Integer skipQuestionId;
+	private BigDecimal skipNum;
 	
 	public XcTestOptions() {
 		super();
@@ -88,6 +91,30 @@ public class XcTestOptions extends DataEntity<XcTestOptions> {
 
 	public void setNum(Integer num) {
 		this.num = num;
+	}
+
+	public String getIfSkip() {
+		return ifSkip;
+	}
+
+	public void setIfSkip(String ifSkip) {
+		this.ifSkip = ifSkip;
+	}
+
+	public Integer getSkipQuestionId() {
+		return skipQuestionId;
+	}
+
+	public void setSkipQuestionId(Integer skipQuestionId) {
+		this.skipQuestionId = skipQuestionId;
+	}
+
+	public BigDecimal getSkipNum() {
+		return skipNum;
+	}
+
+	public void setSkipNum(BigDecimal skipNum) {
+		this.skipNum = skipNum;
 	}
 	
 	

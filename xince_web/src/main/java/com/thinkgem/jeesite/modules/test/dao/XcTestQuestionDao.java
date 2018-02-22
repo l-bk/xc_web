@@ -16,4 +16,5 @@ import com.thinkgem.jeesite.modules.test.entity.XcTestQuestion;
 public interface XcTestQuestionDao extends CrudDao<XcTestQuestion> {
 	int selectCount (String testId);
 	XcTestQuestion selectNew(XcTestQuestion xcTestQuestion);
+	XcTestQuestion selectByQuesNumAndTestId(XcTestQuestion xcTestQuestion);
 }

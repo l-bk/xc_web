@@ -3,6 +3,7 @@
  */
 package com.thinkgem.jeesite.modules.test.web;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,7 +70,12 @@ public class XcTestQuestionController extends BaseController {
 			List<XcTestOptions> optionList=optionsService.findList(options);
 			String str="";
 			for(int i=0;i<optionList.size();i++) {
-				str +=optionList.get(i).getOptionsKeyword() + ":"+optionList.get(i).getOptionsDetails();
+				if("0".equals(optionList.get(i).getIfSkip())){
+					str +=optionList.get(i).getOptionsKeyword() + ":"+optionList.get(i).getOptionsDetails();
+				}else if ("1".equals(optionList.get(i).getIfSkip())){
+					XcTestQuestion newQues=xcTestQuestionService.get(String.valueOf(optionList.get(i).getSkipQuestionId()));
+					str +=optionList.get(i).getOptionsKeyword() + ":跳转到第"+newQues.getQuestionNum()+"题";
+				}
 				if(i != optionList.size()-1) {
 					str += "<br/>";
 				}
@@ -90,7 +96,9 @@ public class XcTestQuestionController extends BaseController {
 		if(StringUtils.isNotBlank(xcTestQuestion.getQuestionId())) {
 			xcTestQuestion=xcTestQuestionService.get(xcTestQuestion.getQuestionId());
 		}
+		int allNum=xcTestQuestionService.selectCount(xcTestQuestion.getTestId());
 		model.addAttribute("xcTestQuestion", xcTestQuestion);
+		model.addAttribute("allNum",allNum);
 		return "modules/test/xcTestQuestionForm";
 	}
 
@@ -110,9 +118,18 @@ public class XcTestQuestionController extends BaseController {
 				for(String str:allOptions) {
 					String oneOptions[] = str.split("-");
 					XcTestOptions options= new XcTestOptions();
-					options.setOptionsKeyword(oneOptions[0]);
-					options.setOptionsDetails(oneOptions[1]);
-					options.setOptionsPoint(oneOptions[2]);
+					options.setOptionsKeyword(oneOptions[0]); //编号
+					options.setIfSkip(oneOptions[1]);//是否跳题
+					if("0".equals(oneOptions[1])){
+						options.setOptionsDetails(oneOptions[2]);
+					}else if ("1" .equals(oneOptions[1])){
+						XcTestQuestion newQues=new XcTestQuestion();
+						newQues.setTestId(xcTestQuestion.getTestId());
+						newQues.setQuestionNum(new BigDecimal(oneOptions[2]));
+						XcTestQuestion ques=xcTestQuestionService.selectByQuesNumAndTestId(newQues);
+						options.setSkipQuestionId(Integer.valueOf(ques.getQuestionId()));
+					}
+					options.setOptionsPoint(oneOptions[3]);
 					options.setTestQuestionId(newQuestion.getQuestionId());
 					optionsService.save(options);
 				}

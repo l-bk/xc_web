@@ -41,6 +41,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
+				ORDER BY a.question_num asc
 			</otherwise>
 		</choose>
 	</select>
@@ -146,4 +147,13 @@
 		order by a.create_time  desc
 		limit 1
 	</select>
+	
+	<select id="selectByQuesNumAndTestId" resultType="XcTestQuestion">
+		select
+		<include refid="xcTestQuestionColumns"/>
+		from xc_test_question a
+		where a.test_id = #{testId}
+		and a.question_num = #{questionNum}
+	</select>
+	
 </mapper>
