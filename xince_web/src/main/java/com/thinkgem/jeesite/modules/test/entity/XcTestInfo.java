@@ -32,6 +32,7 @@ public class XcTestInfo extends DataEntity<XcTestInfo> {
 	private String testReportLength;		// 报告长度
 	private String testPrompt;		// 温馨提示
 	private Date createTime;
+	private String ifShow;
 	
 	public XcTestInfo() {
 		super();
@@ -150,6 +151,14 @@ public class XcTestInfo extends DataEntity<XcTestInfo> {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public String getIfShow() {
+		return ifShow;
+	}
+
+	public void setIfShow(String ifShow) {
+		this.ifShow = ifShow;
 	}
 	
 	

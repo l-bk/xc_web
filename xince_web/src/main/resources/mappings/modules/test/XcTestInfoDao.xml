@@ -18,7 +18,8 @@
 		a.test_report_length AS "testReportLength",
 		a.test_prompt AS "testPrompt",
 		a.del_flag AS "delFlag",
-		a.create_time AS "createTime"
+		a.create_time AS "createTime",
+		a.if_show AS "ifShow"
 	</sql>
 	
 	<sql id="xcTestInfoJoins">
@@ -110,6 +111,9 @@
 			<if test="delFlag != null and delFlag != '' ">
 				del_flag,
 			</if>
+			<if test="ifShow != null and ifShow != ''">
+				if_show,
+			</if>
 				create_time,
 		</trim>
 		<trim prefix="values(" suffix=")" suffixOverrides=",">
@@ -151,6 +155,9 @@
 			</if>
 			<if test="delFlag != null and delFlag != ''">
 				#{delFlag},
+			</if>
+			<if test="ifShow != null and ifShow != ''">
+				#{ifShow},
 			</if>
 				now(),
 		</trim>	
@@ -197,6 +204,9 @@
 			</if>
 			<if test="delFlag != null and delFlag != ''">
 				del_flag = #{delFlag},
+			</if>
+			<if test="ifShow !=null and ifShow != ''">
+				if_show = #{ifShow},
 			</if>
 		</set>
 		WHERE test_id = #{testId}

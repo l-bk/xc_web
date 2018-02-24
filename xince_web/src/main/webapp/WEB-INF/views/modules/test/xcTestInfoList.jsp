@@ -39,6 +39,7 @@
 				<th>测试主题</th>
 				<th>图片</th>	
 				<th>是否收费</th>
+				<th>是否弹窗显示</th>
 				<th>操作</th>
 			</tr>
 		</thead>
@@ -57,6 +58,14 @@
 					</c:if>
 					<c:if test="${xcTestInfo.payFlag == '2' }">
 						付费
+					</c:if>
+				</td>
+				<td>
+					<c:if test="${xcTestInfo.ifShow == '0' }">
+						否
+					</c:if>
+					<c:if test="${xcTestInfo.ifShow == '1'}">
+						是
 					</c:if>
 				</td>
 				<td>

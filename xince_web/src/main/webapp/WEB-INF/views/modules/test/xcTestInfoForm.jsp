@@ -90,6 +90,15 @@
 					maxlength="1024" class="input-xlarge" />
 			</div>
 		</div>
+		
+		<div class="control-group" style="border:0px;">
+			<label class="control-label">是否首页弹窗显示：</label>
+			<div class="controls">
+				<form:radiobutton path="ifShow" htmlEscape="false" class="input-xlarge required" value="0" label="否"/>
+				<form:radiobutton path="ifShow" htmlEscape="false" class="input-xlarge required" value="1" label="是"/>
+			</div>
+		</div>
+	
 		<div class="control-group" style="border:0px;">
 			<label class="control-label">是否付费：</label>
 			<div class="controls">
