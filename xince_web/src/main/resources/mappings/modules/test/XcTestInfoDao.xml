@@ -123,9 +123,7 @@
 			<if test="testSubject != null and testSubject != ''">
 				#{testSubject},
 			</if>
-			<if test="testPic != null and testPic != ''">
 				#{testPic},
-			</if>
 			<if test="testType != null and testType != ''">
 				#{testType},
 			</if>

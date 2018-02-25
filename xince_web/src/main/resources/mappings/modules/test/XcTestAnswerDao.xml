@@ -132,9 +132,7 @@
 	<update id="update">
 		UPDATE xc_test_answer 
 		<set>
-		<if test="answerPic != null and answerPic != ''">
 				answer_pic = #{answerPic},
-			</if>
 			<if test="answerSketch != null and answerSketch!= ''">
 				answer_sketch = #{answerSketch},
 			</if>
@@ -150,9 +148,7 @@
 			<if test="answerPointGt != null and answerPointGt!=''">
 			answer_point_gt = #{answerPointGt},
 			</if>
-			<if test="answerQRCode != null and answerQRCode != null">
 				answer_QRCode = #{answerQRCode},
-			</if>
 			<if test="testId != null and testId != ''">
 				test_id = #{testId}
 			</if>

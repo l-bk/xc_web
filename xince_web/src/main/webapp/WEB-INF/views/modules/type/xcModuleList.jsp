@@ -33,6 +33,7 @@
 		<thead>
 			<tr>
 				<th>模块名称</th>
+				<th>模块图片</th>
 				<th>模块状态</th>
 				<th>模块关联</th>
 				<th>操作</th>
@@ -42,6 +43,11 @@
 		<c:forEach items="${page.list}" var="xcModule">
 			<tr>
 				<td>${xcModule.moduleName}</td>
+				<td>
+					<c:if test="${xcModule.modulePic != null }">
+						<img src=${xcModule.modulePic} width="100px" />
+					</c:if>
+				</td>
 				<td>
 					<c:if test="${xcModule.moduleType == '0' }">
 						${xcModule.picName}

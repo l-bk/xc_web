@@ -8,7 +8,8 @@
 		a.module_type AS "moduleType",
 		a.test_id AS "testId",
 		a.pic_id AS "picId",
-		a.module_status AS "moduleStatus"
+		a.module_status AS "moduleStatus",
+		a.module_pic AS "modulePic"
 	</sql>
 	
 	<sql id="xcModuleJoins">
@@ -74,6 +75,9 @@
 			<if test="moduleStatus != null and moduleStatus !=''">
 				module_status,
 			</if>
+			<if test="modulePic != null and modulePic !=''">
+				module_pic,
+			</if>
 		</trim>
 		<trim prefix="values(" suffix=")" suffixOverrides=",">
 			<if test="moduleName != null and moduleName != ''">
@@ -89,7 +93,10 @@
 				#{picId},
 			</if>
 			<if test="moduleStatus != null and moduleStatus !=''">
-				#{moduleStatus}
+				#{moduleStatus},
+			</if>
+			<if test="modulePic != null and modulePic != ''">
+				#{modulePic},
 			</if>
 		</trim>
 	</insert>
@@ -110,8 +117,9 @@
 				pic_id = #{picId},
 			</if>
 			<if test="moduleStatus != null and moduleStatus !=''">
-				module_status = #{moduleStatus}
+				module_status = #{moduleStatus},
 			</if>
+				module_pic = #{modulePic}
 		</set>
 		WHERE module_id = #{moduleId}
 	</update>

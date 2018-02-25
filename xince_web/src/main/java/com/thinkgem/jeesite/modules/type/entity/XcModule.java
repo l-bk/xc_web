@@ -21,6 +21,7 @@ public class XcModule extends DataEntity<XcModule> {
 	private Integer testId;		// 测试数据id
 	private Integer picId;		// 图片id
 	private String moduleStatus;		// 模块状态 0.下架 1.上架
+	private String modulePic;
 	
 	private String testName;
 	private String picName;
@@ -97,5 +98,15 @@ public class XcModule extends DataEntity<XcModule> {
 	public void setPicName(String picName) {
 		this.picName = picName;
 	}
+
+	public String getModulePic() {
+		return modulePic;
+	}
+
+	public void setModulePic(String modulePic) {
+		this.modulePic = modulePic;
+	}
+	
+	
 	
 }

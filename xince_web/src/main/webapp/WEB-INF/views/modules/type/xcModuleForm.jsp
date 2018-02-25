@@ -64,6 +64,16 @@
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
+		
+		<div class="control-group" style="border:0px;">
+			<label class="control-label">测试图片：</label>
+			<div class="controls">
+				<form:hidden id="modulePic" path="modulePic" htmlEscape="false" class="input-xlarge" disabled="disabled" />
+				<sys:ckfinder input="modulePic" type="images" uploadPath="/module"
+					selectMultiple="false" maxWidth="100" maxHeight="100" />
+			</div>
+		</div>
+		
 		<div class="control-group" style="border:0px;">
 			<label class="control-label">模块类型：</label>
 			<div class="controls">
