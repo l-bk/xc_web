@@ -40,6 +40,7 @@ public class XcModuleService extends CrudService<XcModuleDao, XcModule> {
 		if(StringUtils.isNoneBlank(xcModule.getModuleId())) {
 			xcModule.setId(xcModule.getModuleId());
 		}
+		xcModule.setModuleType("1");
 		super.save(xcModule);
 	}
 	

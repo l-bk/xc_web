@@ -6,7 +6,7 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			
+		/* 	
 			if($("#picButton").is(":checked") == true){
 				$("#picArea").show();
 				$("#testArea").hide();
@@ -14,7 +14,7 @@
 			if($("#testButton").is(":checked") == true){
 				$("#picArea").hide();
 				$("#testArea").show();
-			};
+			}; */
 			
 			//$("#name").focus();
 			$("#inputForm").validate({
@@ -33,7 +33,7 @@
 				}
 			});
 			
-			$("#picButton").change(function(){
+			/* $("#picButton").change(function(){
 				
 				if($("#picButton").is(":checked") == true){
 					$("#picArea").show();
@@ -45,7 +45,7 @@
 					$("#picArea").hide();
 					$("#testArea").show();
 				}
-			})
+			}) */
 		});
 	</script>
 </head>
@@ -74,14 +74,17 @@
 			</div>
 		</div>
 		
-		<div class="control-group" style="border:0px;">
+			<%-- 
+		<div class="control-group" style="border:0px;=">
 			<label class="control-label">模块类型：</label>
 			<div class="controls">
 				<form:radiobutton path="moduleType" id="picButton" htmlEscape="false" class="input-xlarge required" value="0" label="二维码"/>
 				<form:radiobutton path="moduleType" id="testButton" htmlEscape="false" class="input-xlarge required" value="1" label="测试数据"/>
 			</div>
+			</div>
+			 --%>
 		</div>
-		<div class="control-group" style="border:0px;display:none;" id="testArea" >
+		<div class="control-group" style="border:0px;" id="testArea" >
 			<label class="control-label">测试数据名称：</label>
 			<div class="controls">
 			<form:select path="testId" htmlEscape="false" class="input-xlarge required">
