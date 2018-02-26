@@ -57,7 +57,6 @@
 									
 			}
 			});
-			alert(${quesList});
 		});
 	</script>
 </head>

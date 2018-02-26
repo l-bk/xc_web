@@ -23,39 +23,49 @@ import com.thinkgem.jeesite.modules.test.dao.XcTestOptionsDao;
 @Service
 @Transactional(readOnly = true)
 public class XcTestOptionsService extends CrudService<XcTestOptionsDao, XcTestOptions> {
-	
+
 	@Autowired
 	private XcTestOptionsDao optionsDao;
 
 	public XcTestOptions get(String id) {
 		return super.get(id);
 	}
-	
+
 	public List<XcTestOptions> findList(XcTestOptions xcTestOptions) {
 		return super.findList(xcTestOptions);
 	}
-	
+
 	public Page<XcTestOptions> findPage(Page<XcTestOptions> page, XcTestOptions xcTestOptions) {
 		return super.findPage(page, xcTestOptions);
 	}
-	
+
 	@Transactional(readOnly = false)
 	public void save(XcTestOptions xcTestOptions) {
 		if(StringUtils.isNotBlank(xcTestOptions.getOptionsId())) {
 			xcTestOptions.setId(xcTestOptions.getOptionsId());
 		}
+
+		if(StringUtils.isNotBlank(xcTestOptions.getIfSkip())) {
+			if("1".equals(xcTestOptions.getIfSkip())) {
+				if(null != xcTestOptions.getSkipNum() && !"".equals(xcTestOptions.getSkipNum())) {
+					xcTestOptions.setOptionsDetails("跳转到第"+xcTestOptions.getSkipNum()+"题");
+				}
+			}
+		}
+
+
 		super.save(xcTestOptions);
 	}
-	
+
 	@Transactional(readOnly = false)
 	public void delete(XcTestOptions xcTestOptions) {
 		super.delete(xcTestOptions);
 	}
-	
+
 	public int selectCount(String testQuestionId) {
 		return optionsDao.selectCount(testQuestionId);
 	}
-	
+
 	@Transactional(readOnly = false)
 	public void deleteByQuestionId(String questionId) {
 		optionsDao.deleteByQuestionId(questionId);
