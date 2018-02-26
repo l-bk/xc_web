@@ -43,12 +43,7 @@
 			<tr>
 				<td>${xcTestOptions.optionsKeyword }</td>
 				<td>
-				<c:if test="${xcTestOptions.ifSkip == 0 }">
 					${xcTestOptions.optionsDetails }
-				</c:if>
-				<c:if test="${xcTestOptions.ifSkip == 1 }">
-					跳转到第 &nbsp;${xcTestOptions.skipNum}&nbsp;题
-				</c:if>
 				</td>
 				<td>${xcTestOptions.optionsPoint }</td>
 				<shiro:hasPermission name="test:xcTestOptions:edit"><td>

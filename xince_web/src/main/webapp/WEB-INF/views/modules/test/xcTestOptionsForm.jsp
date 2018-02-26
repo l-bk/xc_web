@@ -25,7 +25,6 @@
 			
 			if($("#yesSkip").attr("checked") == "checked"){
 					$("#skipArea").show();
-					$("#detailsArea").hide();
 			};
 			
 			if($("#noSkip").attr("checked") == "checked"){
@@ -40,16 +39,15 @@
 				$("#optionsKeyword").val(arr[num]);
 			});
 			
-			$("#yesSkip").change(function(){
+			 $("#yesSkip").change(function(){
 				if($("#yesSkip").attr("checked") == "checked"){
 					if(${quesNum} > 0){
 						$("#skipArea").show();
-						$("#detailsArea").hide();
 					}else{
 						alert("没有其他问题可跳转");
 					}
 				}
-			});
+			}); 
 			$("#noSkip").change(function(){
 			if($("#noSkip").attr("checked") == "checked"){
 					$("#skipArea").hide();
@@ -76,7 +74,7 @@
 		<form:hidden path="optionsId" />
 		<sys:message content="${message}" />
 
-		<div class="control-group">
+		<div class="control-group" style="border:0px;">
 			<label class="control-label">是否跳题:</label>
 			<div class="controls">
 				<form:radiobutton path="ifSkip" id="noSkip" htmlEscape="false"
@@ -94,14 +92,14 @@
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
-		<div class="control-group">
+		<div class="control-group" style="border:0px;">
 			<label class="control-label">选项内容：</label>
 			<div class="controls" id="detailsArea">
 				<form:input path="optionsDetails" htmlEscape="false"
 					class="input-xlarge required" />
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
-			<div class="controls" id="skipArea" style="display: none;">
+			<div class="controls" id="skipArea" style="display: none; margin-top:10px;">
 				<span>跳转到第&nbsp;</span>
 				<form:select path="skipNum" htmlEscape="false"
 					class="input-xlarge required" style="width:120px;">
@@ -113,7 +111,7 @@
 				<span>&nbsp;题</span>
 			</div>
 		</div>
-		<div class="control-group">
+		<div class="control-group" style="border:0px;">
 			<label class="control-label">选项分数：</label>
 			<div class="controls">
 				<form:input path="optionsPoint" htmlEscape="false"

@@ -70,12 +70,12 @@ public class XcTestQuestionController extends BaseController {
 			List<XcTestOptions> optionList=optionsService.findList(options);
 			String str="";
 			for(int i=0;i<optionList.size();i++) {
-				if("0".equals(optionList.get(i).getIfSkip())){
+//				if("0".equals(optionList.get(i).getIfSkip())){
 					str +=optionList.get(i).getOptionsKeyword() + ":"+optionList.get(i).getOptionsDetails();
-				}else if ("1".equals(optionList.get(i).getIfSkip())){
-					XcTestQuestion newQues=xcTestQuestionService.get(String.valueOf(optionList.get(i).getSkipQuestionId()));
-					str +=optionList.get(i).getOptionsKeyword() + ":跳转到第"+newQues.getQuestionNum()+"题";
-				}
+//				}else if ("1".equals(optionList.get(i).getIfSkip())){
+//					XcTestQuestion newQues=xcTestQuestionService.get(String.valueOf(optionList.get(i).getSkipQuestionId()));
+//					str +=optionList.get(i).getOptionsKeyword() + ":跳转到第"+newQues.getQuestionNum()+"题";
+//				}
 				if(i != optionList.size()-1) {
 					str += "<br/>";
 				}
@@ -108,7 +108,7 @@ public class XcTestQuestionController extends BaseController {
 		if (!beanValidator(model, xcTestQuestion)){
 			return form(xcTestQuestion, model);
 		}
-		if(StringUtils.isBlank(xcTestQuestion.getQuestionId())) {//报存
+		if(StringUtils.isBlank(xcTestQuestion.getQuestionId())) {//保存
 
 			xcTestQuestionService.save(xcTestQuestion);
 			XcTestQuestion newQuestion=xcTestQuestionService.selectNew(xcTestQuestion);
@@ -128,6 +128,7 @@ public class XcTestQuestionController extends BaseController {
 						newQues.setQuestionNum(new BigDecimal(oneOptions[2]));
 						XcTestQuestion ques=xcTestQuestionService.selectByQuesNumAndTestId(newQues);
 						options.setSkipQuestionId(Integer.valueOf(ques.getQuestionId()));
+						options.setOptionsDetails(oneOptions[4]+"，跳转到第"+oneOptions[2]+"题");
 					}
 					options.setOptionsPoint(oneOptions[3]);
 					options.setTestQuestionId(newQuestion.getQuestionId());

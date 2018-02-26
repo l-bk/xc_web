@@ -44,16 +44,6 @@ public class XcTestOptionsService extends CrudService<XcTestOptionsDao, XcTestOp
 		if(StringUtils.isNotBlank(xcTestOptions.getOptionsId())) {
 			xcTestOptions.setId(xcTestOptions.getOptionsId());
 		}
-
-		if(StringUtils.isNotBlank(xcTestOptions.getIfSkip())) {
-			if("1".equals(xcTestOptions.getIfSkip())) {
-				if(null != xcTestOptions.getSkipNum() && !"".equals(xcTestOptions.getSkipNum())) {
-					xcTestOptions.setOptionsDetails("跳转到第"+xcTestOptions.getSkipNum()+"题");
-				}
-			}
-		}
-
-
 		super.save(xcTestOptions);
 	}
 
