@@ -69,6 +69,14 @@
 					class="input-xlarge required" />
 			</div>
 		</div>
+		
+		<div class="control-group" style="border:0px;">
+			<label class="control-label">在测人数:</label>
+			<div class="controls">
+				<form:input path="testUseNum" htmlEscape="false" class="input-xlarge required"/>
+			</div>
+		</div>
+		
 		<div class="control-group" style="border:0px;">
 			<label class="control-label">测试图片：</label>
 			<div class="controls">

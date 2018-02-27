@@ -27,7 +27,7 @@ public class XcTestOptions extends DataEntity<XcTestOptions> {
 	private Integer num;
 	private String ifSkip;
 	private Integer skipQuestionId;
-	private BigDecimal skipNum;
+	private Integer skipNum;
 	
 	public XcTestOptions() {
 		super();
@@ -109,13 +109,15 @@ public class XcTestOptions extends DataEntity<XcTestOptions> {
 		this.skipQuestionId = skipQuestionId;
 	}
 
-	public BigDecimal getSkipNum() {
+	public Integer getSkipNum() {
 		return skipNum;
 	}
 
-	public void setSkipNum(BigDecimal skipNum) {
+	public void setSkipNum(Integer skipNum) {
 		this.skipNum = skipNum;
 	}
+
+	
 	
 	
 }

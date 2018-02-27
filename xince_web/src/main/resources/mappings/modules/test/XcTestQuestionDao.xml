@@ -110,7 +110,7 @@
 				question_details = #{questionDetails},
 			</if>
 			<if test="testId != null and testId != ''">
-				test_id = #{testId}
+				test_id = #{testId},
 			</if>
 			<if test="questionNum != null and questionNum != ''">
 				question_num = #{questionNum},
@@ -138,6 +138,10 @@
 		where a.test_id = #{testId}
 		</select>
 		
+		<select id="selectMaxQuestionNum" resultType ="Integer">
+			select max(a.question_num) from xc_test_question a
+			where a.test_id = #{testId}
+		</select>
 		
 	<select id="selectNew" resultType="XcTestQuestion"	>
 		select
@@ -155,5 +159,6 @@
 		where a.test_id = #{testId}
 		and a.question_num = #{questionNum}
 	</select>
+	
 	
 </mapper>

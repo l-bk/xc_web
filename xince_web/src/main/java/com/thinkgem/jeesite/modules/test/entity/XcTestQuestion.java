@@ -22,7 +22,7 @@ public class XcTestQuestion extends DataEntity<XcTestQuestion> {
 	private String questionDetails;		// 问题内容
 	private String testOptionsId;		// 选项id
 	private String testId;		// 测试id
-	private BigDecimal questionNum;
+	private Integer questionNum;
 	private String options;//选项全部内容
 	private String type;//操作类型
 	private Date createTime;
@@ -69,11 +69,12 @@ public class XcTestQuestion extends DataEntity<XcTestQuestion> {
 		this.testId = testId;
 	}
 
-	public BigDecimal getQuestionNum() {
+
+	public Integer getQuestionNum() {
 		return questionNum;
 	}
 
-	public void setQuestionNum(BigDecimal questionNum) {
+	public void setQuestionNum(Integer questionNum) {
 		this.questionNum = questionNum;
 	}
 

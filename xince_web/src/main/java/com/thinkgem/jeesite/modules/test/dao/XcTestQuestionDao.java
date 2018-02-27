@@ -3,6 +3,8 @@
  */
 package com.thinkgem.jeesite.modules.test.dao;
 
+import java.math.BigDecimal;
+
 import com.thinkgem.jeesite.common.persistence.CrudDao;
 import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
 import com.thinkgem.jeesite.modules.test.entity.XcTestQuestion;
@@ -17,4 +19,5 @@ public interface XcTestQuestionDao extends CrudDao<XcTestQuestion> {
 	int selectCount (String testId);
 	XcTestQuestion selectNew(XcTestQuestion xcTestQuestion);
 	XcTestQuestion selectByQuesNumAndTestId(XcTestQuestion xcTestQuestion);
+	Integer selectMaxQuestionNum(String testId);
 }

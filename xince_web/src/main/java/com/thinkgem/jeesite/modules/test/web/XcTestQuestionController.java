@@ -125,7 +125,7 @@ public class XcTestQuestionController extends BaseController {
 					}else if ("1" .equals(oneOptions[1])){
 						XcTestQuestion newQues=new XcTestQuestion();
 						newQues.setTestId(xcTestQuestion.getTestId());
-						newQues.setQuestionNum(new BigDecimal(oneOptions[2]));
+						newQues.setQuestionNum(Integer.valueOf(oneOptions[2]));
 						XcTestQuestion ques=xcTestQuestionService.selectByQuesNumAndTestId(newQues);
 						options.setSkipQuestionId(Integer.valueOf(ques.getQuestionId()));
 						options.setOptionsDetails(oneOptions[4]+"，跳转到第"+oneOptions[2]+"题");
@@ -154,8 +154,20 @@ public class XcTestQuestionController extends BaseController {
 	@RequiresPermissions("test:xcTestQuestion:edit")
 	@RequestMapping(value = "delete")
 	public String delete(XcTestQuestion xcTestQuestion, RedirectAttributes redirectAttributes) {
+		XcTestQuestion newQue=xcTestQuestionService.get(xcTestQuestion.getQuestionId());
 		xcTestQuestionService.delete(xcTestQuestion);
 		optionsService.deleteByQuestionId(xcTestQuestion.getQuestionId());
+		if(StringUtils.isNotBlank(xcTestQuestion.getQuestionId())) {
+			XcTestQuestion newQues=new XcTestQuestion();
+			newQues.setTestId(newQue.getTestId());
+			List<XcTestQuestion> quesList = xcTestQuestionService.findList(newQues);
+			for(XcTestQuestion ques : quesList) {
+				if(ques.getQuestionNum() >newQue.getQuestionNum()) {
+					ques.setQuestionNum(ques.getQuestionNum()-1);
+					xcTestQuestionService.updateQuestion(ques);
+				}
+			}
+		}
 		addMessage(redirectAttributes, "删除测试问题成功");
 		return "redirect:"+Global.getAdminPath()+"/test/xcTestQuestion/?repage&testId="+xcTestQuestion.getTestId();
 	}

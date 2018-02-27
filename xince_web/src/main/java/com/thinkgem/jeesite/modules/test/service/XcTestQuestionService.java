@@ -43,8 +43,12 @@ public class XcTestQuestionService extends CrudService<XcTestQuestionDao, XcTest
 	@Transactional(readOnly = false)
 	public void save(XcTestQuestion xcTestQuestion) {
 		if(StringUtils.isBlank(xcTestQuestion.getQuestionId())) {
-			int num=questionDao.selectCount(xcTestQuestion.getTestId());
-			xcTestQuestion.setQuestionNum(new BigDecimal(String.valueOf(num+1)));
+			Integer num=questionDao.selectMaxQuestionNum(xcTestQuestion.getTestId());
+			int number=1;
+			if(num != null) {
+				number=num+1;
+			}
+			xcTestQuestion.setQuestionNum(number);
 		}
 		super.save(xcTestQuestion);
 	}
@@ -66,5 +70,10 @@ public class XcTestQuestionService extends CrudService<XcTestQuestionDao, XcTest
 	@Transactional(readOnly=false)
 	public XcTestQuestion selectByQuesNumAndTestId(XcTestQuestion xcTestQuestion){
 		return questionDao.selectByQuesNumAndTestId(xcTestQuestion);
+	}
+	
+	@Transactional(readOnly = false)
+	public void updateQuestion(XcTestQuestion xcTestQustion) {
+		questionDao.update(xcTestQustion);
 	}
 }
