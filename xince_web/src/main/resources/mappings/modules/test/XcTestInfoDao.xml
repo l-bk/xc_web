@@ -73,9 +73,6 @@
 	<insert id="insert">
 		INSERT INTO xc_test_info
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="testTitle != null and testTitle != ''">
-				test_title,
-			</if>
 			<if test="testSubject != null and testSubject != ''">
 				test_subject,
 			</if>
@@ -121,13 +118,12 @@
 				create_time,
 		</trim>
 		<trim prefix="values(" suffix=")" suffixOverrides=",">
-			<if test="testTitle != null and testTitle != ''">
-				#{testTitle},
-			</if>
 			<if test="testSubject != null and testSubject != ''">
 				#{testSubject},
 			</if>
+			<if test="testPic != null and testPic != ''">
 				#{testPic},
+			</if>
 			<if test="testType != null and testType != ''">
 				#{testType},
 			</if>

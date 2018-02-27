@@ -113,6 +113,7 @@ public class XcTestOptionsController extends BaseController {
 			ques.setQuestionNum(xcTestOptions.getSkipNum());
 			XcTestQuestion newQues=questionService.selectByQuesNumAndTestId(ques);
 			xcTestOptions.setSkipQuestionId(Integer.valueOf(newQues.getQuestionId()));
+			xcTestOptions.setOptionsDetails(xcTestOptions.getOptionsDetails()+"，跳转到第"+xcTestOptions.getSkipNum()+"题");
 		}
 		xcTestOptionsService.save(xcTestOptions);
 		addMessage(redirectAttributes, "保存测试选项成功");

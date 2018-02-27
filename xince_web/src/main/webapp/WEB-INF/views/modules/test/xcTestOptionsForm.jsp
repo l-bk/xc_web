@@ -40,8 +40,9 @@
 			});
 			
 			 $("#yesSkip").change(function(){
+				 
 				if($("#yesSkip").attr("checked") == "checked"){
-					if(${quesNum} > 0){
+					if(${quesNum}.length> 0){
 						$("#skipArea").show();
 					}else{
 						alert("没有其他问题可跳转");
