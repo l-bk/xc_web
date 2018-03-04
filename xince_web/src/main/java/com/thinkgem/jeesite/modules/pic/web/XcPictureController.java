@@ -6,6 +6,7 @@ package com.thinkgem.jeesite.modules.pic.web;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,8 @@ import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.pic.entity.XcPicture;
 import com.thinkgem.jeesite.modules.pic.service.XcPictureService;
+import com.thinkgem.jeesite.modules.test.entity.XcTestInfo;
+import com.thinkgem.jeesite.modules.test.service.XcTestInfoService;
 
 /**
  * 图片模块Controller
@@ -38,6 +41,9 @@ public class XcPictureController extends BaseController {
 
 	@Autowired
 	private XcPictureService xcPictureService;
+	
+	@Autowired
+	private XcTestInfoService testService;
 	
 	@ModelAttribute
 	public XcPicture get(@RequestParam(required=false) String id) {
@@ -65,6 +71,11 @@ public class XcPictureController extends BaseController {
 	@RequiresPermissions("pic:xcPicture:view")
 	@RequestMapping(value = "form")
 	public String form(XcPicture xcPicture, Model model) {
+		if(StringUtils.isNotBlank(xcPicture.getPicId())){
+			xcPicture = xcPictureService.get(xcPicture.getPicId());
+		}
+		List<XcTestInfo> list=testService.findList(new XcTestInfo());
+		model.addAttribute("xcTestInfo",list);
 		model.addAttribute("xcPicture", xcPicture);
 		return "modules/pic/xcPictureForm";
 	}

@@ -5,6 +5,7 @@ package com.thinkgem.jeesite.modules.pic.service;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +37,9 @@ public class XcPictureService extends CrudService<XcPictureDao, XcPicture> {
 	
 	@Transactional(readOnly = false)
 	public void save(XcPicture xcPicture) {
+		if(StringUtils.isNotBlank(xcPicture.getPicId())){
+			xcPicture.setId(xcPicture.getPicId());
+		}
 		super.save(xcPicture);
 	}
 	

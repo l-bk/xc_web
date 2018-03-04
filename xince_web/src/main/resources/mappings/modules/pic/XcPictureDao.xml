@@ -7,7 +7,8 @@
 		a.pic_path AS "picPath",
 		a.pic_type AS "picType",
 		a.pic_status AS "picStatus",
-		a.pic_name AS "picName"
+		a.pic_name AS "picName",
+		a.test_id AS "testId"
 	</sql>
 	
 	<sql id="xcPictureJoins">
@@ -75,6 +76,9 @@
 			<if test="picName != null and picName != ''">
 				pic_name,
 			</if>
+			<if test="testId != null and testId != ''">
+				test_id,
+			</if>
 		</trim>
 		<trim prefix="value(" suffix=")" suffixOverrides=",">
 			<if test="picPath != null">
@@ -89,15 +93,16 @@
 			<if test="picName != null and picName != ''">
 				#{picName},
 			</if>
+			<if test="testId !=null and testId != ''">
+				#{testId},
+			</if>
 		</trim>
 	</insert>
 	
 	<update id="update">
 		UPDATE xc_picture a
 		<set>
-			<if test="picPath != null">
 				pic_path = #{picPath},
-			</if>
 			<if test="picType != null">
 				pic_type = #{picType},
 			</if>
@@ -106,6 +111,9 @@
 			</if>
 			<if test="picName != null and picName != ''">
 				pic_name = #{picName},
+			</if>
+			<if test="testId != null and testId != ''">
+				test_id = #{testId},
 			</if>
 		</set>
 		

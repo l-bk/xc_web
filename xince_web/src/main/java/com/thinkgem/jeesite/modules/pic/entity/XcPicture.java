@@ -19,7 +19,18 @@ public class XcPicture extends DataEntity<XcPicture> {
 	private String picType;		// 图片类型: 1.轮播图 ，2.二维码
 	private String picStatus;	//图片状态 1 上架  2 下架
 	private String picName;
+	private String testId;
 	
+	
+	
+	public String getTestId() {
+		return testId;
+	}
+
+	public void setTestId(String testId) {
+		this.testId = testId;
+	}
+
 	public XcPicture() {
 		super();
 	}
@@ -66,6 +77,7 @@ public class XcPicture extends DataEntity<XcPicture> {
 	public void setPicName(String picName) {
 		this.picName = picName;
 	}
+
 
 	
 }

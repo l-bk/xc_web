@@ -61,6 +61,21 @@
 				</div>
 			</div>
 		</c:if>
+		<c:if test="${xcPicture.picType == '1' }">
+		<div class="control-group" style="border:0px;" id="testArea" >
+			<label class="control-label">测试数据名称：</label>
+			<div class="controls">
+			<form:select path="testId" htmlEscape="false" class="input-xlarge required">
+				<form:option value="" label="请选择"/>
+				<c:forEach items="${xcTestInfo}" var="item" >
+					<form:option value="${item.testId}"  label="${item.testSubject}"/>
+				</c:forEach>
+			</form:select>
+			</div>
+		</div>
+		</c:if>
+		
+		
 		<div class="control-group" style="border:0px;">
 			<label class="control-label">图片状态:</label>
 			<div class="controls">
