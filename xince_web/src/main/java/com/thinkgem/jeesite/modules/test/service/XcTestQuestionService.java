@@ -46,7 +46,7 @@ public class XcTestQuestionService extends CrudService<XcTestQuestionDao, XcTest
 			Integer num=questionDao.selectMaxQuestionNum(xcTestQuestion.getTestId());
 			int number=1;
 			if(num != null) {
-				number=num+1;
+				number=num.intValue()+1;
 			}
 			xcTestQuestion.setQuestionNum(number);
 		}

@@ -33,7 +33,7 @@ public class XcTestInfo extends DataEntity<XcTestInfo> {
 	private String testPrompt;		// 温馨提示
 	private Date createTime;
 	private String ifShow;
-	private BigDecimal testUseNum;
+	private String testUseNum;
 	
 	public XcTestInfo() {
 		super();
@@ -162,13 +162,14 @@ public class XcTestInfo extends DataEntity<XcTestInfo> {
 		this.ifShow = ifShow;
 	}
 
-	public BigDecimal getTestUseNum() {
-		return testUseNum;
-	}
-
-	public void setTestUseNum(BigDecimal testUseNum) {
+	public void setTestUseNum(String testUseNum) {
 		this.testUseNum = testUseNum;
 	}
+
+	public String getTestUseNum() {
+		return testUseNum;
+	}
+	
 	
 	
 }

@@ -116,7 +116,7 @@
 			<label class="control-label">选项分数：</label>
 			<div class="controls">
 				<form:input path="optionsPoint" htmlEscape="false"
-					class="input-xlarge requried" placeholder="输入分数，限制整数"/>
+					class="input-xlarge " placeholder="输入分数，限制整数"/>
 			</div>
 		</div>
 		<div class="form-actions">

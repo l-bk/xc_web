@@ -21,12 +21,16 @@ import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.modules.pic.entity.XcPicture;
+import com.thinkgem.jeesite.modules.pic.service.XcPictureService;
 import com.thinkgem.jeesite.modules.test.entity.XcTestInfo;
 import com.thinkgem.jeesite.modules.test.entity.XcTestQuestion;
 import com.thinkgem.jeesite.modules.test.service.XcTestAnswerService;
 import com.thinkgem.jeesite.modules.test.service.XcTestInfoService;
 import com.thinkgem.jeesite.modules.test.service.XcTestOptionsService;
 import com.thinkgem.jeesite.modules.test.service.XcTestQuestionService;
+import com.thinkgem.jeesite.modules.type.entity.XcModule;
+import com.thinkgem.jeesite.modules.type.service.XcModuleService;
 
 /**
  * 测试模块Controller
@@ -48,6 +52,12 @@ public class XcTestInfoController extends BaseController {
 	
 	@Autowired
 	private XcTestOptionsService optionsService;
+	
+	@Autowired
+	private XcPictureService xcPicService;
+	
+	@Autowired
+	private XcModuleService moduleService;
 	
 	@ModelAttribute
 	public XcTestInfo get(@RequestParam(required=false) String id) {
@@ -99,6 +109,25 @@ public class XcTestInfoController extends BaseController {
 	@RequiresPermissions("test:xcTestInfo:edit")
 	@RequestMapping(value = "delete")
 	public String delete(XcTestInfo xcTestInfo, RedirectAttributes redirectAttributes) {
+		XcModule module =new XcModule();
+		module.setTestId(Integer.valueOf(xcTestInfo.getTestId()));
+		List<XcModule>moduleList=moduleService.findList(module);
+		XcPicture xcPic =new XcPicture();
+		xcPic.setTestId(xcTestInfo.getTestId());
+		List<XcPicture> picList=xcPicService.findList(xcPic);
+		String msgStr="删除失败！该测试数据被";
+		if(moduleList.size() >0 ){
+			msgStr += " 模块信息 ";
+		}
+		if(picList.size() > 0 ){
+			if(moduleList.size()>0){
+				msgStr += " 和 图片信息 ";
+			}else{
+				msgStr += " 图片信息 ";
+			}
+		}
+		msgStr += "所关联,请修改对应信息再执行删除操作";
+		if(moduleList.size() == 0 && picList.size() == 0){
 		xcTestInfoService.delete(xcTestInfo);
 		XcTestQuestion question =new XcTestQuestion();
 		question.setTestId(xcTestInfo.getTestId());
@@ -110,8 +139,11 @@ public class XcTestInfoController extends BaseController {
 			optionsService.deleteByQuestionId(ques.getQuestionId());
 			
 		}
+		
 		answerService.deleteByTestId(xcTestInfo.getTestId());
-		addMessage(redirectAttributes, "删除测试模块成功");
+		msgStr="删除测试数据成功！";
+		}
+		addMessage(redirectAttributes, msgStr);
 		return "redirect:"+Global.getAdminPath()+"/test/xcTestInfo/?repage";
 	}
 

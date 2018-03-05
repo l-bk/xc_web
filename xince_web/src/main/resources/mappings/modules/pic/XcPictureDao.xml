@@ -34,6 +34,9 @@
 			<if test="picStatus != null and picStatus != ''">
 				and a.pic_status = #{picStatus}
 			</if>
+			<if test="testId != null and testId != ''">
+				and a.test_id = #{testId}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">

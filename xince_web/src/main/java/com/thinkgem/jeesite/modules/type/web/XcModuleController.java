@@ -66,12 +66,11 @@ public class XcModuleController extends BaseController {
 		List<XcModule> list=page.getList();
 		List<XcModule> newlist=new ArrayList();
 		for(XcModule module:list) {
-			if("0".equals(module.getModuleType())) {
-				XcPicture pic=picService.get(String.valueOf(module.getPicId()));
-				module.setPicName(pic.getPicName());
-			}else if("1".equals(module.getModuleType())) {
+			if("1".equals(module.getModuleType())) {
 				XcTestInfo testInfo=testInfoService.get(String.valueOf(module.getTestId()));
-				module.setTestName(testInfo.getTestSubject());
+				if(testInfo != null){
+					module.setTestName(testInfo.getTestSubject());
+				}
 			}
 			newlist.add(module);
 		}

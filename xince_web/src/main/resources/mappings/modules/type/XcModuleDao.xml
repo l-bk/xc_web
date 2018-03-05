@@ -29,7 +29,9 @@
 		FROM xc_module a
 		<include refid="xcModuleJoins"/>
 		<where>
-			
+			<if test="testId != null and testId != ''">
+				a.test_id = #{testId}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">

@@ -35,7 +35,7 @@
 			newTestId=newTestId.replace(newTestId.charAt(newTestId.length-1),arr[num]); 
 			newPointId = newPointId.replace(newPointId.charAt(newPointId.length-1),arr[num]);
 			newIfSkip = newIfSkip.replace(newIfSkip.charAt(newIfSkip.length-1),arr[num]);
-			$("#options").append("<div class=\"control-group\" style=\"display:none;\"><input id=\""+newIfSkip+"\" value=\"0\"/></div><div class=\"control-group\" style=\"border:0px;\" > <label class=\"control-label\">"+arr[num]+":</label><div class=\"controls\" ><input type=\"text\"  id=\""+newTestId+"\" class=\"required\" /></div></div><div class=\"control-group\"style=\"border:0px;\" ><label class=\"control-label\" >分数:</label><div class=\"controls\" style=\"border:0px;\"><input type=\"text\" id=\""+newPointId+"\" style=\"width:80px;\" class=\"required\" /></div></div> ");	
+			$("#options").append("<div class=\"control-group\" style=\"display:none;\"><input id=\""+newIfSkip+"\" value=\"0\"/></div><div class=\"control-group\" style=\"border:0px;\" > <label class=\"control-label\">"+arr[num]+":</label><div class=\"controls\" ><input type=\"text\"  id=\""+newTestId+"\" class=\"required\" /></div></div><div class=\"control-group\"style=\"border:0px;\" ><label class=\"control-label\" >分数:</label><div class=\"controls\" style=\"border:0px;\"><input type=\"text\" id=\""+newPointId+"\" style=\"width:80px;\"  /></div></div> ");	
 			
 			num+=1; 
 		});
@@ -54,7 +54,7 @@
 				}
 				
 			}
-			$("#options").append("<div class=\"control-group\" style=\"display:none;\"><input id=\""+newIfSkip+"\" value=\"1\"/></div><div class=\"control-group\" style=\"border:0px;\"><label class=\"control-label\">"+arr[num]+":</label><div class=\"controls\" ><input type=\"text\"  id=\""+newTestId+"\" class=\"required\" /></div></div><div class=\"controls\"><lable>跳转到第</lable>"+newStr+"<label style=\"margin-left:5px;\">题</label></div><div class=\"control-group\" style=\"border:0px;margin-top:10px;\"><label class=\"control-label\" >分数:</label><div class=\"controls\"><input type=\"text\" id=\""+newPointId+"\" style=\"width:80px;\" class=\"required\" /></div></div> ");	
+			$("#options").append("<div class=\"control-group\" style=\"display:none;\"><input id=\""+newIfSkip+"\" value=\"1\"/></div><div class=\"control-group\" style=\"border:0px;\"><label class=\"control-label\">"+arr[num]+":</label><div class=\"controls\" ><input type=\"text\"  id=\""+newTestId+"\" class=\"required\" /></div></div><div class=\"controls\"><lable>跳转到第</lable>"+newStr+"<label style=\"margin-left:5px;\">题</label></div><div class=\"control-group\" style=\"border:0px;margin-top:10px;\"><label class=\"control-label\" >分数:</label><div class=\"controls\"><input type=\"text\" id=\""+newPointId+"\" style=\"width:80px;\"  /></div></div> ");	
 			  
 			num+=1; 
 		});
@@ -69,10 +69,11 @@
 				newTestId=newTestId.replace(newTestId.charAt(newTestId.length-1),arr[i]); 
 				newPointId = newPointId.replace(newPointId.charAt(newPointId.length-1),arr[i]);
 				newSkipNum = newSkipNum.replace(newSkipNum.charAt(newSkipNum.length-1),arr[i]);
+				var pointValue=$("#"+newPointId).val() == ""?0:$("#"+newPointId).val();
 				if($("#"+newIfSkip).val() == 0){
-					allOptions += arr[i]+"-"+$("#"+newIfSkip).val()+"-"+$("#"+newTestId).val()+"-"+$("#"+newPointId).val();
+					allOptions += arr[i]+"-"+$("#"+newIfSkip).val()+"-"+$("#"+newTestId).val()+"-"+pointValue;
 				}else if($("#"+newIfSkip).val()==1){
-					allOptions += arr[i]+"-"+$("#"+newIfSkip).val()+"-"+$("#"+newSkipNum).val()+"-"+$("#"+newPointId).val()+"-"+$("#"+newTestId).val();
+					allOptions += arr[i]+"-"+$("#"+newIfSkip).val()+"-"+$("#"+newSkipNum).val()+"-"+pointValue+"-"+$("#"+newTestId).val();
 				}
 				if(i!= num-1){
 					allOptions += ",";
