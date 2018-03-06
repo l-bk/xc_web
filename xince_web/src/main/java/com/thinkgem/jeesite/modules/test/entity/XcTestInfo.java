@@ -34,6 +34,7 @@ public class XcTestInfo extends DataEntity<XcTestInfo> {
 	private Date createTime;
 	private String ifShow;
 	private String testUseNum;
+	private String testLogo;
 	
 	public XcTestInfo() {
 		super();
@@ -168,6 +169,14 @@ public class XcTestInfo extends DataEntity<XcTestInfo> {
 
 	public String getTestUseNum() {
 		return testUseNum;
+	}
+
+	public String getTestLogo() {
+		return testLogo;
+	}
+
+	public void setTestLogo(String testLogo) {
+		this.testLogo = testLogo;
 	}
 	
 	

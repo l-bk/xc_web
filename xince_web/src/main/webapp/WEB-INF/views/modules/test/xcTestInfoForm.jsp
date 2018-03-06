@@ -78,10 +78,19 @@
 		</div>
 		
 		<div class="control-group" style="border:0px;">
+			<label class="control-label">测试logo：</label>
+			<div class="controls">
+				<form:hidden id="testLogo" path="testLogo" htmlEscape="false" class="input-xlarge" disabled="disabled" />
+				<sys:ckfinder input="testLogo" type="images" uploadPath="/testLogo"
+					selectMultiple="false" maxWidth="100" maxHeight="100" />
+			</div>
+		</div>
+		
+		<div class="control-group" style="border:0px;">
 			<label class="control-label">测试图片：</label>
 			<div class="controls">
 				<form:hidden id="testPic" path="testPic" htmlEscape="false" class="input-xlarge" disabled="disabled" />
-				<sys:ckfinder input="testPic" type="images" uploadPath="/test"
+				<sys:ckfinder input="testPic" type="images" uploadPath="/testPic"
 					selectMultiple="false" maxWidth="100" maxHeight="100" />
 			</div>
 		</div>
