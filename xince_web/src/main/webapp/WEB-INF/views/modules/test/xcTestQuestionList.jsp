@@ -50,7 +50,7 @@
 						<a href="${ctx}/test/xcTestQuestion/delete?testId=${xcTestQuestion.testId}&questionId= ${xcTestQuestion.questionId }" onclick="return confirmx('确认要删除该测试问题及选项吗？', this.href)">删除</a>
 					</shiro:hasPermission>
 					<shiro:hasPermission name="test:xcTestOptions:view">
-						<a href="${ctx}/test/xcTestOptions/?testQuestionId=${xcTestQuestion.questionId}">查看选项列表</a>
+						<a href="${ctx}/test/xcTestOptions/?testQuestionId=${xcTestQuestion.questionId}&testId=${xcTestQuestion.testId}">查看选项列表</a>
 					</shiro:hasPermission>
 				</td>
 				

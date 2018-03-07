@@ -49,7 +49,10 @@ public class XcTestQuestionService extends CrudService<XcTestQuestionDao, XcTest
 				number=num.intValue()+1;
 			}
 			xcTestQuestion.setQuestionNum(number);
+		}else{
+			xcTestQuestion.setId(xcTestQuestion.getQuestionId());
 		}
+		
 		super.save(xcTestQuestion);
 	}
 	

@@ -13,9 +13,13 @@
 			$("#searchForm").submit();
         	return false;
         }
+		
+		
+		
 	</script>
 </head>
 <body>
+
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/test/xcTestOptions/?testQuestionId=${xcTestOptions.testQuestionId}">测试选项列表</a></li>
 		<shiro:hasPermission name="test:xcTestOptions:edit"><li><a href="${ctx}/test/xcTestOptions/form?testQuestionId=${xcTestOptions.testQuestionId}">测试选项添加</a></li></shiro:hasPermission>
@@ -26,7 +30,7 @@
 		<label>选项内容 ：</label>
 		<form:input path="optionsDetails" htmlEscape="false"/>
 		<input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"  style="margin-left:20px;"/>
-		<!-- <input id="btnUpdate" class="btn btn-primary" type="button" value="查询"  style="margin-left:20px;"/> -->
+		<input id="returnUpdate" class="btn btn-primary" type="button" value="返回问题列表"   style="margin-left:20px;"/>
 	</form:form>
 	<sys:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed" style="width:80%;">
@@ -55,5 +59,14 @@
 		</tbody>
 	</table>
 	<div class="pagination">${page}</div>
+	
+	<script>
+	/* $("#returnUpdate").click(function(){
+		$.ajax({
+			url:"${ctx}/test/xcTestQuestion/?testId=${xcTestOptions.testId}",
+			success:function(){}
+		});
+	}); */
+</script>
 </body>
 </html>

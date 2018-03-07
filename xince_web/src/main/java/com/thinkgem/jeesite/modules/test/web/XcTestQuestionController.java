@@ -71,7 +71,9 @@ public class XcTestQuestionController extends BaseController {
 			String str="";
 			for(int i=0;i<optionList.size();i++) {
 //				if("0".equals(optionList.get(i).getIfSkip())){
-					str +=optionList.get(i).getOptionsKeyword() + ":"+optionList.get(i).getOptionsDetails();
+					str +=optionList.get(i).getOptionsKeyword() + ":"+optionList.get(i).getOptionsDetails() +
+							"(" +optionList.get(i).getOptionsPoint()+"分)";
+					
 //				}else if ("1".equals(optionList.get(i).getIfSkip())){
 //					XcTestQuestion newQues=xcTestQuestionService.get(String.valueOf(optionList.get(i).getSkipQuestionId()));
 //					str +=optionList.get(i).getOptionsKeyword() + ":跳转到第"+newQues.getQuestionNum()+"题";
@@ -120,15 +122,15 @@ public class XcTestQuestionController extends BaseController {
 					XcTestOptions options= new XcTestOptions();
 					options.setOptionsKeyword(oneOptions[0]); //编号
 					options.setIfSkip(oneOptions[1]);//是否跳题
-					if("0".equals(oneOptions[1])){
-						options.setOptionsDetails(oneOptions[2]);
-					}else if ("1" .equals(oneOptions[1])){
+					if("0".equals(oneOptions[1])){ //不跳题
+						options.setOptionsDetails(oneOptions[4]);
+					}else if ("1" .equals(oneOptions[1])){//跳题
 						XcTestQuestion newQues=new XcTestQuestion();
 						newQues.setTestId(xcTestQuestion.getTestId());
 						newQues.setQuestionNum(Integer.valueOf(oneOptions[2]));
 						XcTestQuestion ques=xcTestQuestionService.selectByQuesNumAndTestId(newQues);
 						options.setSkipQuestionId(Integer.valueOf(ques.getQuestionId()));
-						options.setOptionsDetails(oneOptions[4]+"，跳转到第"+oneOptions[2]+"题");
+						options.setOptionsDetails(oneOptions[4]);
 					}
 					options.setOptionsPoint(oneOptions[3]);
 					options.setTestQuestionId(newQuestion.getQuestionId());
