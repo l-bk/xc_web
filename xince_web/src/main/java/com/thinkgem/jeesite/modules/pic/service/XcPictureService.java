@@ -40,6 +40,9 @@ public class XcPictureService extends CrudService<XcPictureDao, XcPicture> {
 		if(StringUtils.isNotBlank(xcPicture.getPicId())){
 			xcPicture.setId(xcPicture.getPicId());
 		}
+		if("".equals(xcPicture.getPicPath())) {
+			xcPicture.setPicPath(null);
+		}
 		super.save(xcPicture);
 	}
 	

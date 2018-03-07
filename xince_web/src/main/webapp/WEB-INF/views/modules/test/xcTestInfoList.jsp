@@ -37,6 +37,7 @@
 		<thead>
 			<tr>
 				<th>测试主题</th>
+				<th>logo</th>
 				<th>图片</th>	
 				<th>是否收费</th>
 				<th>是否弹窗显示</th>
@@ -47,6 +48,11 @@
 		<c:forEach items="${page.list}" var="xcTestInfo">
 			<tr>
 				<td>${xcTestInfo.testSubject }</td>
+				<td>
+					<c:if test="${xcTestInfo.testLogo != null }">
+						<img src=${xcTestInfo.testLogo} width="100px" />
+					</c:if>
+				</td>
 				<td>
 					<c:if test="${xcTestInfo.testPic != null }">
 						<img src=${xcTestInfo.testPic} width="100px" />

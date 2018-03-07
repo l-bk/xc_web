@@ -44,6 +44,12 @@ public class XcTestInfoService extends CrudService<XcTestInfoDao, XcTestInfo> {
 		if(StringUtils.isNotBlank(xcTestInfo.getTestId())) {
 			xcTestInfo.setId(xcTestInfo.getTestId());
 		}
+		if("".equals(xcTestInfo.getTestPic() )) {
+			xcTestInfo.setTestPic(null);
+		}
+		if("".equals(xcTestInfo.getTestLogo())) {
+			xcTestInfo.setTestLogo(null);
+		}
 		super.save(xcTestInfo);
 	}	
 	

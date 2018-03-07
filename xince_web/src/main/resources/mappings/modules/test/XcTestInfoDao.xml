@@ -20,7 +20,8 @@
 		a.del_flag AS "delFlag",
 		a.create_time AS "createTime",
 		a.if_show AS "ifShow",
-		a.test_use_num AS "testUseNum"
+		a.test_use_num AS "testUseNum",
+		a.test_logo AS "testLogo"
 	</sql>
 	
 	<sql id="xcTestInfoJoins">
@@ -115,6 +116,9 @@
 			<if test="testUseNum != null and testUseNum != ''">
 				test_use_num,
 			</if>
+			<if test="testLogo != null and testLogo != ''">
+				test_logo,
+			</if>
 				create_time,
 		</trim>
 		<trim prefix="values(" suffix=")" suffixOverrides=",">
@@ -160,6 +164,9 @@
 			<if test="testUseNum != null and testUseNum != ''">
 				#{testUseNum},
 			</if>
+			<if test="testLogo != null and testLogo != ''">
+				#{testLogo},
+			</if>
 				now(),
 		</trim>	
 	</insert>
@@ -173,9 +180,8 @@
 			<if test="testSubject != null and testSubject != ''">
 				test_subject = #{testSubject},
 			</if>
-			<if test="testPic != null and testPic != ''" >
 				test_pic = #{testPic},
-			</if>
+				test_logo = #{testLogo},
 			<if test="testType != null and testType != ''">
 				test_type = #{testType},
 			</if>
