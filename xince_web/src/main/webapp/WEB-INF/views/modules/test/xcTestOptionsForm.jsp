@@ -62,15 +62,15 @@
 <body>
 	<ul class="nav nav-tabs">
 		<li><a
-			href="${ctx}/test/xcTestOptions/?testQuestionId=${xcTestOptions.testQuestionId}">测试选项列表</a></li>
+			href="${ctx}/test/xcTestOptions/?testQuestionId=${xcTestOptions.testQuestionId}&testId=${xcTestOptions.testId}">测试选项列表</a></li>
 		<li class="active"><a
-			href="${ctx}/test/xcTestOptions/form?optionsId=${xcTestOptions.optionsId}&testQuestionId=${xcTestOptions.testQuestionId}">测试选项<shiro:hasPermission
+			href="${ctx}/test/xcTestOptions/form?optionsId=${xcTestOptions.optionsId}&testQuestionId=${xcTestOptions.testQuestionId}&testId=${xcTestOptions.testId}">测试选项<shiro:hasPermission
 					name="test:xcTestOptions:edit">${not empty xcTestOptions.id?'修改':'添加'}</shiro:hasPermission>
 				<shiro:lacksPermission name="test:xcTestOptions:edit">查看</shiro:lacksPermission></a></li>
 	</ul>
 	<br />
 	<form:form id="inputForm" modelAttribute="xcTestOptions"
-		action="${ctx}/test/xcTestOptions/save?testQuestionId=${xcTestOptions.testQuestionId}"
+		action="${ctx}/test/xcTestOptions/save?testQuestionId=${xcTestOptions.testQuestionId}&testId=${testId}"
 		method="post" class="form-horizontal">
 		<form:hidden path="optionsId" />
 		<sys:message content="${message}" />

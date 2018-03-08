@@ -78,6 +78,7 @@ public class XcTestOptionsController extends BaseController {
 	@RequiresPermissions("test:xcTestOptions:view")
 	@RequestMapping(value = "form")
 	public String form(XcTestOptions xcTestOptions, Model model) {
+		String testId= xcTestOptions.getTestId();
 		if(StringUtils.isNoneBlank(xcTestOptions.getOptionsId())) {
 			xcTestOptions=xcTestOptionsService.get(xcTestOptions.getOptionsId());
 		}
@@ -96,6 +97,7 @@ public class XcTestOptionsController extends BaseController {
 				quesNum.add(question.getQuestionNum().intValue());
 			}
 		}
+		model.addAttribute("testId",testId);
 		model.addAttribute("quesNum",quesNum);
 		model.addAttribute("xcTestOptions", xcTestOptions);
 		return "modules/test/xcTestOptionsForm";
@@ -118,7 +120,7 @@ public class XcTestOptionsController extends BaseController {
 		}
 		xcTestOptionsService.save(xcTestOptions);
 		addMessage(redirectAttributes, "保存测试选项成功");
-		return "redirect:"+Global.getAdminPath()+"/test/xcTestOptions/?repage&testQuestionId=" +xcTestOptions.getTestQuestionId();
+		return "redirect:"+Global.getAdminPath()+"/test/xcTestOptions/?repage&testQuestionId=" +xcTestOptions.getTestQuestionId()+"&testId="+xcTestOptions.getTestId();
 	}
 	
 	@RequiresPermissions("test:xcTestOptions:edit")
@@ -126,7 +128,7 @@ public class XcTestOptionsController extends BaseController {
 	public String delete(XcTestOptions xcTestOptions, RedirectAttributes redirectAttributes) {
 		xcTestOptionsService.delete(xcTestOptions);
 		addMessage(redirectAttributes, "删除测试选项成功");
-		return "redirect:"+Global.getAdminPath()+"/test/xcTestOptions/?repage&testQuestionId=" +xcTestOptions.getTestQuestionId();
+		return "redirect:"+Global.getAdminPath()+"/test/xcTestOptions/?repage&testQuestionId=" +xcTestOptions.getTestQuestionId()+"&testId="+xcTestOptions.getTestId();
 	}
 
 }
