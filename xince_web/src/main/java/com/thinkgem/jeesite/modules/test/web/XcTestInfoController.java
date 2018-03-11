@@ -86,7 +86,12 @@ public class XcTestInfoController extends BaseController {
 			xcTestInfo=xcTestInfoService.get(xcTestInfo.getTestId());
 		}
 		model.addAttribute("xcTestInfo", xcTestInfo);
-		return "modules/test/xcTestInfoForm";
+//		if("0".equals(xcTestInfo.getTestType())){
+			return "modules/test/xcTestInfoForm";
+//		}else if ("1".equals(xcTestInfo.getTestType())){
+//			return "module/test/xcTestInfoSkipForm";
+//		}
+//		return null;
 	}
 
 	@RequiresPermissions("test:xcTestInfo:edit")
@@ -102,7 +107,8 @@ public class XcTestInfoController extends BaseController {
 		}else{
 			xcTestInfo=xcTestInfoService.selectByCreateTime();
 			addMessage(redirectAttributes, "保存测试信息成功,请添加问题及选项");
-			return "redirect:"+Global.getAdminPath()+"/test/xcTestQuestion/form?testId="+xcTestInfo.getTestId();
+			String s=xcTestInfo.getTestType();
+			return "redirect:"+Global.getAdminPath()+"/test/xcTestQuestion/form?testType="+xcTestInfo.getTestType()+"&testId="+xcTestInfo.getTestId();
 		}
 	}
 	

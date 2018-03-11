@@ -94,12 +94,12 @@
 					selectMultiple="false" maxWidth="100" maxHeight="100" />
 			</div>
 		</div>
-		<%-- <div class="control-group">
+		<div class="control-group" style="border:0px;display:none;">
 			<label class="control-label">测试类型：</label>
 			<div class="controls">
-				<form:input path="testType" htmlEscape="false" maxlength="10" class="input-xlarge "/>
+				<form:input path="testType" id="testType" htmlEscape="false" maxlength="10" class="input-xlarge "/>
 			</div>
-		</div> --%>
+		</div> 
 		<div class="control-group" style="border:0px;">
 			<label class="control-label">测试介绍：</label>
 			<div class="controls">
@@ -177,9 +177,21 @@
 				<input id="btnUpdate" class="btn btn-primary" type="submit" value="修改"/>&nbsp;
 			</c:if>
 			<c:if test="${xcTestInfo.testId == null}">
-				<input id="btnSubmit" class="btn btn-primary" type="submit"
-					value="保存并添加问题 " />&nbsp;
+				<input id="btnSubmitPoint" class="btn btn-primary" type="submit"
+					value="保存并添加分数类型问题 " />&nbsp;
+				<input id="btnSubmitSkip" class="btn btn-primary" type="submit"
+					value="保存并添加跳题类型问题 " />&nbsp;
 			</c:if>		
+			<script>
+				$("#btnSubmitPoint").click(function(){
+					
+					$("#testType").val("0");
+					
+				});
+				$("#btnSubmitSkip").click(function(){
+					$("#testType").val("1");
+				})
+			</script>
 					</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回"
 				onclick="history.go(-1)" />

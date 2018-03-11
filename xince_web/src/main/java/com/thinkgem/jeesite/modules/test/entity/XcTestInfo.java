@@ -22,7 +22,7 @@ public class XcTestInfo extends DataEntity<XcTestInfo> {
 	private String testTitle;		// 测试标题
 	private String testSubject;		// 测试主题
 	private String testPic;		// 测试图片
-	private String testType;		// 测试类型
+	private String testType;		// 测试类型  0分数类型  1.跳题类型
 	private String payFlag;		// 付费标记 1.免费，2.付费
 	private String testPresentation;		// 测试介绍
 	private String testNum;		// 题目数

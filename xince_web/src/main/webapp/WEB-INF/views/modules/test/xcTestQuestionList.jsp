@@ -6,7 +6,6 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			
 		});
 		function page(n,s){
 			$("#pageNo").val(n);
@@ -18,10 +17,17 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/test/xcTestQuestion/?testId=${xcTestQuestion.testId}">测试问题列表</a></li>
-		<shiro:hasPermission name="test:xcTestQuestion:edit"><li><a href="${ctx}/test/xcTestQuestion/form?testId=${xcTestQuestion.testId}">测试问题添加</a></li></shiro:hasPermission>
+		<li class="active"><a href="${ctx}/test/xcTestQuestion/?testId=${xcTestQuestion.testId}&testType=${xcTestQuestion.testType}">测试问题列表</a></li>
+		<shiro:hasPermission name="test:xcTestQuestion:edit"><li><a href="${ctx}/test/xcTestQuestion/form?testId=${xcTestQuestion.testId}&testType=${xcTestQuestion.testType}">
+		<c:if test="${xcTestQuestion.testType == '0' }">
+			分数类型测试问题添加
+		</c:if>
+		<c:if test="${xcTestQuestion.testType == '1' }">
+			跳题类型测试问题添加
+		</c:if>
+		</a></li></shiro:hasPermission>
 	</ul>
-	<form:form id="searchForm" modelAttribute="xcTestQuestion" action="${ctx}/test/xcTestQuestion/?testId=${xcTestQuestion.testId}" method="post" class="breadcrumb form-search">
+	<form:form id="searchForm" modelAttribute="xcTestQuestion" action="${ctx}/test/xcTestQuestion/?testId=${xcTestQuestion.testId}&testType=${xcTestQuestion.testType}" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<label style="margin-left:20px">问题内容:</label>
@@ -39,18 +45,18 @@
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="${page.list}" var="xcTestQuestion">
+		<c:forEach items="${page.list}" var="testQuestion">
 			<tr>
-				<td>${xcTestQuestion.questionNum}</td>
-				<td>${xcTestQuestion.questionDetails}</td>
-				<th><label>${xcTestQuestion.options}</label></th>
+				<td>${testQuestion.questionNum}</td>
+				<td>${testQuestion.questionDetails}</td>
+				<th><label>${testQuestion.options}</label></th>
 				<td>
 					<shiro:hasPermission name="test:xcTestQuestion:edit">
-    					<a href="${ctx}/test/xcTestQuestion/form?testId=${xcTestQuestion.testId}&questionId= ${xcTestQuestion.questionId } ">修改</a>
-						<a href="${ctx}/test/xcTestQuestion/delete?testId=${xcTestQuestion.testId}&questionId= ${xcTestQuestion.questionId }" onclick="return confirmx('确认要删除该测试问题及选项吗？', this.href)">删除</a>
+    					<a href="${ctx}/test/xcTestQuestion/form?testId=${xcTestQuestion.testId}&questionId= ${testQuestion.questionId }&testType= ${xcTestQuestion.testType} ">修改</a>
+						<a href="${ctx}/test/xcTestQuestion/delete?testId=${xcTestQuestion.testId}&questionId= ${testQuestion.questionId }&testType= ${xcTestQuestion.testType}" onclick="return confirmx('确认要删除该测试问题及选项吗？', this.href)">删除</a>
 					</shiro:hasPermission>
 					<shiro:hasPermission name="test:xcTestOptions:view">
-						<a href="${ctx}/test/xcTestOptions/?testQuestionId=${xcTestQuestion.questionId}&testId=${xcTestQuestion.testId}">查看选项列表</a>
+						<a href="${ctx}/test/xcTestOptions/?testQuestionId=${testQuestion.questionId}&testId=${xcTestQuestion.testId} &testType=${xcTestQuestion.testType}">查看选项列表</a>
 					</shiro:hasPermission>
 				</td>
 				

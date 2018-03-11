@@ -29,15 +29,15 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/test/xcTestQuestion/?testId=${xcTestQuestion.testId}&testType=0">测试问题列表</a></li>
+		<li><a href="${ctx}/test/xcTestQuestion/?testId=${xcTestQuestion.testId}&testType=1">测试问题列表</a></li>
 			<li class="active"><a id="update"
-			href="${ctx}/test/xcTestQuestion/form?testId=${xcTestQuestion.testId}&testType=0">分数类型测试问题<shiro:hasPermission
+			href="${ctx}/test/xcTestQuestion/form?testId=${xcTestQuestion.testId}&testType=1">跳题类型测试问题<shiro:hasPermission
 					name="test:xcTestQuestion:edit">${not empty xcTestQuestion.questionId?'修改':'添加'}</shiro:hasPermission>
 				<shiro:lacksPermission name="test:xcTestQuestion:edit">查看</shiro:lacksPermission></a></li>
 	</ul>
 	<br />
 	<form:form id="inputForm" modelAttribute="xcTestQuestion"
-		action="${ctx}/test/xcTestQuestion/save?testType=0" method="post"
+		action="${ctx}/test/xcTestQuestion/save?testType=1" method="post"
 		class="form-horizontal">
 		<form:hidden path="questionId" />
 		<sys:message content="${message}" />
@@ -80,22 +80,12 @@
 			<div class="control-group" style="border: 0px; margin-top: 20px;">
 				<div class="controls ">
 					<input id="addOptions" class="btn" type="button" value="添加选项" />
-					<c:if test="${allNum != 0}">
-						<input id="addSkipOptions" class="btn" type="button" value="添加跳题选项" />
-					</c:if>
 				</div>
 			</div>
 		</c:if>
 		
 		
-	<%-- 	<div>
-		<select name="skipNum" id="skipNum">
-			<option value="0" >请选择</option> 
-			<c:forEach var="item" begin="1" end="${allNum}">
-				<option value="${item}">${item}</option>
-				</c:forEach>
-				</select>
-				</div> --%>
+	
 		
 		<div class="form-actions">
 			<shiro:hasPermission name="test:xcTestQuestion:edit">
@@ -138,29 +128,11 @@ $("#addOptions").click(function(){
 		}
 		
 	} 
-	$("#options").append("<div class=\"control-group\" style=\"display:none;\"><input id=\""+newIfSkip+"\" value=\"0\"/></div><div class=\"control-group\" style=\"border:0px;\" > <label class=\"control-label\">"+arr[num]+":</label><div class=\"controls\" ><input type=\"text\"  id=\""+newTestId+"\" class=\"required\" /></div></div><div class=\"controls\" style=\"display:none;\"><lable>跳转到第</lable>"+newStr+"<label style=\"margin-left:5px;\">题</label></div><div class=\"control-group\"style=\"border:0px;\" ><label class=\"control-label\" >分数:</label><div class=\"controls\" style=\"border:0px;\"><input type=\"text\" id=\""+newPointId+"\" value=\"0\" style=\"width:80px;\" class=\"required\"  /></div></div> ");	
+	$("#options").append("<div class=\"control-group\" style=\"border:0px;\" > <label class=\"control-label\">"+arr[num]+":</label><div class=\"controls\" ><input type=\"text\"  id=\""+newTestId+"\" class=\"required\" /></div></div>");	
 	
 	num+=1; 
 });
 
-$("#addSkipOptions").click(function(){
-	newTestId=newTestId.replace(newTestId.charAt(newTestId.length-1),arr[num]); 
-	newPointId = newPointId.replace(newPointId.charAt(newPointId.length-1),arr[num]);
-	newIfSkip = newIfSkip.replace(newIfSkip.charAt(newIfSkip.length-1),arr[num]);
-	newSkipNum = newSkipNum.replace(newSkipNum.charAt(newSkipNum.length-1),arr[num]);
-	var allNum=${allNum};
-	var newStr="<select name=\""+newSkipNum+"\" id=\""+newSkipNum+"\" style=\"margin-left:5px;width:120px;\"><option value=\"0\" >请选择</option>" 
-	for(var i=1;i<allNum+1;i++){
-		newStr += "<option value=\""+i+"\">"+i+"</option>";
-		if(i==allNum){
-			newStr+="</select>";
-		}
-		
-	}
-	$("#options").append("<div class=\"control-group\" style=\"display:none;\"><input id=\""+newIfSkip+"\" value=\"1\"/></div><div class=\"control-group\" style=\"border:0px;\"><label class=\"control-label\">"+arr[num]+":</label><div class=\"controls\" ><input type=\"text\"  id=\""+newTestId+"\" class=\"required\" /></div></div><div class=\"controls\"><lable>跳转到第</lable>"+newStr+"<label style=\"margin-left:5px;\">题</label></div><div class=\"control-group\" style=\"border:0px;margin-top:10px;\"><label class=\"control-label\" >分数:</label><div class=\"controls\"><input type=\"text\" id=\""+newPointId+"\" value=\"0\" class=\"required\" style=\"width:80px;\"  /></div></div> ");	
-	  
-	num+=1; 
-});
 
 $("#btnSubmit").click(function(){$("#type").val("keepSave")});
 $("#btnSave").click(function(){$("#type").val("save")});
@@ -169,16 +141,7 @@ $("#btnSubmit,#btnSave,#btnJustSave").click(function(){
 	var allOptions="";
 	for(var i=0;i<num;i++){
 		newTestId=newTestId.replace(newTestId.charAt(newTestId.length-1),arr[i]); 
-		newPointId = newPointId.replace(newPointId.charAt(newPointId.length-1),arr[i]);
-		newSkipNum = newSkipNum.replace(newSkipNum.charAt(newSkipNum.length-1),arr[i]);
-		newIfSkip = newIfSkip.replace(newIfSkip.charAt(newIfSkip.length-1),arr[i]);
-		var pointValue=$("#"+newPointId).val() == ""?0:$("#"+newPointId).val();
-		if($("#"+newIfSkip).val() == 0){
-				allOptions += arr[i]+"-"+$("#"+newIfSkip).val()+"-"+0+"-"+pointValue+"-"+$("#"+newTestId).val();
-		}else if($("#"+newIfSkip).val()==1){
-				allOptions += arr[i]+"-"+$("#"+newIfSkip).val()+"-"+$("#"+newSkipNum).val()+"-"+pointValue+"-"+$("#"+newTestId).val();
-		}
-			
+		allOptions += arr[i]+"-"+$("#"+newTestId).val();
 		if(i!= num-1){
 			allOptions += ",";
 		}

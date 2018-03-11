@@ -70,14 +70,17 @@ public class XcTestQuestionController extends BaseController {
 			List<XcTestOptions> optionList=optionsService.findList(options);
 			String str="";
 			for(int i=0;i<optionList.size();i++) {
-//				if("0".equals(optionList.get(i).getIfSkip())){
+				if("0".equals(xcTestQuestion.getTestType())){
+
 					str +=optionList.get(i).getOptionsKeyword() + ":"+optionList.get(i).getOptionsDetails() +
 							"(" +optionList.get(i).getOptionsPoint()+"分)";
-					
-//				}else if ("1".equals(optionList.get(i).getIfSkip())){
-//					XcTestQuestion newQues=xcTestQuestionService.get(String.valueOf(optionList.get(i).getSkipQuestionId()));
-//					str +=optionList.get(i).getOptionsKeyword() + ":跳转到第"+newQues.getQuestionNum()+"题";
-//				}
+				}else if ("1".equals(xcTestQuestion.getTestType())){
+					str +=optionList.get(i).getOptionsKeyword() + ":"+optionList.get(i).getOptionsDetails();
+					if(null != xcTestQuestion.getSkipNum() && !"".equals(xcTestQuestion.getSkipNum())) {
+						str +="(跳转到第" +xcTestQuestion.getSkipNum()+"题)";
+					}
+				}
+
 				if(i != optionList.size()-1) {
 					str += "<br/>";
 				}
@@ -95,13 +98,22 @@ public class XcTestQuestionController extends BaseController {
 	@RequiresPermissions("test:xcTestQuestion:view")
 	@RequestMapping(value = "form")
 	public String form(XcTestQuestion xcTestQuestion, Model model) {
+		String testType=xcTestQuestion.getTestType();
 		if(StringUtils.isNotBlank(xcTestQuestion.getQuestionId())) {
 			xcTestQuestion=xcTestQuestionService.get(xcTestQuestion.getQuestionId());
+			xcTestQuestion.setTestType(testType);
 		}
+		
 		int allNum=xcTestQuestionService.selectCount(xcTestQuestion.getTestId());
 		model.addAttribute("xcTestQuestion", xcTestQuestion);
 		model.addAttribute("allNum",allNum);
-		return "modules/test/xcTestQuestionForm";
+		if("0".equals(xcTestQuestion.getTestType())){ 
+
+			return "modules/test/xcTestQuestionForm";
+		}else if("1".equals(xcTestQuestion.getTestType())){
+			return "modules/test/xcTestQuestionSkipForm";
+		}
+		return null;
 	}
 
 	@RequiresPermissions("test:xcTestQuestion:edit")
@@ -117,39 +129,51 @@ public class XcTestQuestionController extends BaseController {
 
 			if(StringUtils.isNotBlank(xcTestQuestion.getOptions())) {
 				String allOptions[] =xcTestQuestion.getOptions().split(",");
-				for(String str:allOptions) {
-					String oneOptions[] = str.split("-");
-					XcTestOptions options= new XcTestOptions();
-					options.setOptionsKeyword(oneOptions[0]); //编号
-					options.setIfSkip(oneOptions[1]);//是否跳题
-					if("0".equals(oneOptions[1])){ //不跳题
-						options.setOptionsDetails(oneOptions[4]);
-					}else if ("1" .equals(oneOptions[1])){//跳题
-						XcTestQuestion newQues=new XcTestQuestion();
-						newQues.setTestId(xcTestQuestion.getTestId());
-						newQues.setQuestionNum(Integer.valueOf(oneOptions[2]));
-						XcTestQuestion ques=xcTestQuestionService.selectByQuesNumAndTestId(newQues);
-						options.setSkipQuestionId(Integer.valueOf(ques.getQuestionId()));
-						options.setOptionsDetails(oneOptions[4]);
+
+				if("0".equals(xcTestQuestion.getTestType())){//分数类型
+					for(String str:allOptions) {
+						String oneOptions[] = str.split("-");
+						XcTestOptions options= new XcTestOptions();
+						options.setOptionsKeyword(oneOptions[0]); //编号
+						options.setIfSkip(oneOptions[1]);//是否跳题
+						if("0".equals(oneOptions[1])){ //不跳题
+							options.setOptionsDetails(oneOptions[4]);
+						}else if ("1" .equals(oneOptions[1])){//跳题
+							XcTestQuestion newQues=new XcTestQuestion();
+							newQues.setTestId(xcTestQuestion.getTestId());
+							newQues.setQuestionNum(Integer.valueOf(oneOptions[2]));
+							XcTestQuestion ques=xcTestQuestionService.selectByQuesNumAndTestId(newQues);
+							options.setSkipQuestionId(Integer.valueOf(ques.getQuestionId()));
+							options.setOptionsDetails(oneOptions[4]);
+						}
+						options.setOptionsPoint(oneOptions[3]);
+						options.setTestQuestionId(newQuestion.getQuestionId());
+						optionsService.save(options);
 					}
-					options.setOptionsPoint(oneOptions[3]);
-					options.setTestQuestionId(newQuestion.getQuestionId());
-					optionsService.save(options);
+				}else if("1".equals(xcTestQuestion.getTestType())){//跳题类型
+					for(String str:allOptions) {
+						String oneOptions[] = str.split("-");
+						XcTestOptions newOption=new XcTestOptions();
+						newOption.setOptionsKeyword(oneOptions[0]);
+						newOption.setOptionsDetails(oneOptions[1]);
+						newOption.setTestQuestionId(newQuestion.getQuestionId());
+						optionsService.save(newOption);
+					}
 				}
 			}
 			if("keepSave".equals(xcTestQuestion.getType())) { //继续添加选项
 				addMessage(redirectAttributes, "保存成功，继续添加问题");
-				return "redirect:"+Global.getAdminPath()+"/test/xcTestQuestion/form?testId="+xcTestQuestion.getTestId();
+				return "redirect:"+Global.getAdminPath()+"/test/xcTestQuestion/form?testId="+xcTestQuestion.getTestId()+"&testType="+xcTestQuestion.getTestType();
 			}else if("save".equals(xcTestQuestion.getType())) {//跳到添加结果页
 				addMessage(redirectAttributes, "保存成功，添加结果");
-				return "redirect:"+Global.getAdminPath()+"/test/xcTestAnswer/form?testId="+xcTestQuestion.getTestId();
+				return "redirect:"+Global.getAdminPath()+"/test/xcTestAnswer/form?testId="+xcTestQuestion.getTestId()+"&testType="+xcTestQuestion.getTestType();
 			}else {
 				addMessage(redirectAttributes, "保存成功");
-				return "redirect:"+Global.getAdminPath()+"/test/xcTestQuestion/?repage&testId="+xcTestQuestion.getTestId();
+				return "redirect:"+Global.getAdminPath()+"/test/xcTestQuestion/?repage&testId="+xcTestQuestion.getTestId()+"&testType="+xcTestQuestion.getTestType();
 			}
 		}else {//修改
 			xcTestQuestionService.save(xcTestQuestion);
-			return "redirect:"+Global.getAdminPath()+"/test/xcTestQuestion/?repage&testId="+xcTestQuestion.getTestId();
+			return "redirect:"+Global.getAdminPath()+"/test/xcTestQuestion/?repage&testId="+xcTestQuestion.getTestId()+"&testType="+xcTestQuestion.getTestType();
 		}
 	}
 
@@ -171,7 +195,7 @@ public class XcTestQuestionController extends BaseController {
 			}
 		}
 		addMessage(redirectAttributes, "删除测试问题成功");
-		return "redirect:"+Global.getAdminPath()+"/test/xcTestQuestion/?repage&testId="+xcTestQuestion.getTestId();
+		return "redirect:"+Global.getAdminPath()+"/test/xcTestQuestion/?repage&testId="+xcTestQuestion.getTestId()+"&testType="+xcTestQuestion.getTestType();
 	}
 
 }

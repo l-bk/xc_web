@@ -81,11 +81,11 @@
 				</shiro:hasPermission>
 				<br/>
 				<shiro:hasPermission name="test:xcTestQuestion:view">
-					<a href="${ctx}/test/xcTestQuestion/list?testId=${xcTestInfo.testId}">查看问题列表</a>
+					<a href="${ctx}/test/xcTestQuestion/list?testId=${xcTestInfo.testId}&testType=${xcTestInfo.testType}">查看问题列表</a>
 				</shiro:hasPermission>
 				<br/>
 				<shiro:hasPermission name="test:xcTestAnswer:view">
-					<a href="${ctx}/test/xcTestAnswer/list?testId=${xcTestInfo.testId}">查看结果列表</a>
+					<a href="${ctx}/test/xcTestAnswer/list?testId=${xcTestInfo.testId}&testType=${xcTestInfo.testType}">查看结果列表</a>
 				</shiro:hasPermission>
 				</td>
 			</tr>
