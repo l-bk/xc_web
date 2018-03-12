@@ -30,7 +30,7 @@ public class XcTestAnswer extends DataEntity<XcTestAnswer> {
 	private String delFlag;
 	private Date createTime;
 	
-	
+	private String testType;
 	public XcTestAnswer() {
 		super();
 	}
@@ -126,6 +126,14 @@ public class XcTestAnswer extends DataEntity<XcTestAnswer> {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public String getTestType() {
+		return testType;
+	}
+
+	public void setTestType(String testType) {
+		this.testType = testType;
 	}
 	
 	

@@ -78,6 +78,13 @@
 		</div>
 		
 		<div class="control-group" style="border:0px;">
+			<label class="control-label">打赏人数:</label>
+			<div class="controls">
+				<form:input path="rewardNum" htmlEscape="false" class="input-xlarge required"/>
+			</div>
+		</div>
+		
+		<div class="control-group" style="border:0px;">
 			<label class="control-label">测试logo：</label>
 			<div class="controls">
 				<form:hidden id="testLogo" path="testLogo" htmlEscape="false" class="input-xlarge" disabled="disabled" />

@@ -72,6 +72,7 @@ public class XcTestOptionsController extends BaseController {
 		page.setList(newList);
 		model.addAttribute("testId",xcTestOptions.getTestId());
 		model.addAttribute("page", page);
+		model.addAttribute("testType",xcTestOptions.getTestType());
 		return "modules/test/xcTestOptionsList";
 	}
 
@@ -79,8 +80,10 @@ public class XcTestOptionsController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(XcTestOptions xcTestOptions, Model model) {
 		String testId= xcTestOptions.getTestId();
+		String testType = xcTestOptions.getTestType();
 		if(StringUtils.isNoneBlank(xcTestOptions.getOptionsId())) {
 			xcTestOptions=xcTestOptionsService.get(xcTestOptions.getOptionsId());
+			xcTestOptions.setTestType(testType);
 		}
 		int num=xcTestOptionsService.selectCount(xcTestOptions.getTestQuestionId());
 		model.addAttribute("num",num);
@@ -120,7 +123,7 @@ public class XcTestOptionsController extends BaseController {
 		}
 		xcTestOptionsService.save(xcTestOptions);
 		addMessage(redirectAttributes, "保存测试选项成功");
-		return "redirect:"+Global.getAdminPath()+"/test/xcTestOptions/?repage&testQuestionId=" +xcTestOptions.getTestQuestionId()+"&testId="+xcTestOptions.getTestId();
+		return "redirect:"+Global.getAdminPath()+"/test/xcTestOptions/?repage&testQuestionId=" +xcTestOptions.getTestQuestionId()+"&testId="+xcTestOptions.getTestId()+"&testType="+xcTestOptions.getTestType();
 	}
 	
 	@RequiresPermissions("test:xcTestOptions:edit")
@@ -128,7 +131,7 @@ public class XcTestOptionsController extends BaseController {
 	public String delete(XcTestOptions xcTestOptions, RedirectAttributes redirectAttributes) {
 		xcTestOptionsService.delete(xcTestOptions);
 		addMessage(redirectAttributes, "删除测试选项成功");
-		return "redirect:"+Global.getAdminPath()+"/test/xcTestOptions/?repage&testQuestionId=" +xcTestOptions.getTestQuestionId()+"&testId="+xcTestOptions.getTestId();
+		return "redirect:"+Global.getAdminPath()+"/test/xcTestOptions/?repage&testQuestionId=" +xcTestOptions.getTestQuestionId()+"&testId="+xcTestOptions.getTestId()+"&testType="+xcTestOptions.getTestType();
 	}
 
 }

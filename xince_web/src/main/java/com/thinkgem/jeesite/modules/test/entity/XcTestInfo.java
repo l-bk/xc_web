@@ -35,6 +35,7 @@ public class XcTestInfo extends DataEntity<XcTestInfo> {
 	private String ifShow;
 	private String testUseNum;
 	private String testLogo;
+	private String  rewardNum;
 	
 	public XcTestInfo() {
 		super();
@@ -177,6 +178,14 @@ public class XcTestInfo extends DataEntity<XcTestInfo> {
 
 	public void setTestLogo(String testLogo) {
 		this.testLogo = testLogo;
+	}
+
+	public String getRewardNum() {
+		return rewardNum;
+	}
+
+	public void setRewardNum(String rewardNum) {
+		this.rewardNum = rewardNum;
 	}
 	
 	

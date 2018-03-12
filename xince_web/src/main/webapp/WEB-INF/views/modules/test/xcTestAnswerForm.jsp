@@ -7,6 +7,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			//$("#name").focus();
+			alert(${xcTestAnswer.testType});
 			$("#inputForm").validate({
 				submitHandler: function(form){
 					loading('正在提交，请稍等...');
@@ -56,10 +57,10 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/test/xcTestAnswer/?testId=${xcTestAnswer.testId}">测试结果列表</a></li>
-		<li class="active"><a href="${ctx}/test/xcTestAnswer/form?id=${xcTestAnswer.answerId}">测试结果<shiro:hasPermission name="test:xcTestAnswer:edit">${not empty xcTestAnswer.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="test:xcTestAnswer:edit">查看</shiro:lacksPermission></a></li>
+		<li><a href="${ctx}/test/xcTestAnswer/?testId=${xcTestAnswer.testId}&testType=${xcTestAnswer.testType}">测试结果列表</a></li>
+		<li class="active"><a href="${ctx}/test/xcTestAnswer/form?answerId=${xcTestAnswer.answerId}&testType=${xcTestAnswer.testType}">测试结果<shiro:hasPermission name="test:xcTestAnswer:edit">${not empty xcTestAnswer.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="test:xcTestAnswer:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
-	<form:form id="inputForm" modelAttribute="xcTestAnswer" action="${ctx}/test/xcTestAnswer/save?testId=${xcTestAnswer.testId}" method="post" class="form-horizontal">
+	<form:form id="inputForm" modelAttribute="xcTestAnswer" action="${ctx}/test/xcTestAnswer/save?testId=${xcTestAnswer.testId}&testType=${xcTestAnswer.testType}" method="post" class="form-horizontal">
 		<form:hidden path="answerId"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
@@ -74,6 +75,7 @@
 				<form:input path="answerSketch" htmlEscape="false" maxlength="64" class="input-xlarge requried"/>
 			</div>
 		</div>
+		<c:if test="${xcTestAnswer.testType=='0' }">
 		<div class="control-group">
 			<label class="control-label">总分数范围内：</label>
 			<div class="controls">
@@ -82,6 +84,7 @@
 				<form:input path="answerPointLt" htmlEscape="false" class="input-xlarge required" style="width:80px;" pattern="^[1-9]*$" placeholder="输入整数"/>
 			</div>
 		</div>
+		</c:if>
 		<%-- <div class="control-group">
 			<label class="control-label">总分数大于：</label>
 			<div class="controls">

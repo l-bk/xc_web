@@ -6,7 +6,7 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			
+			alert(${xcTestAnswer.testType});
 		});
 		function page(n,s){
 			$("#pageNo").val(n);
@@ -18,10 +18,10 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/test/xcTestAnswer/?testId=${xcTestAnswer.testId}">测试结果列表</a></li>
-		<shiro:hasPermission name="test:xcTestAnswer:edit"><li><a href="${ctx}/test/xcTestAnswer/form?testId=${xcTestAnswer.testId}">测试结果添加</a></li></shiro:hasPermission>
+		<li class="active"><a href="${ctx}/test/xcTestAnswer/?testId=${xcTestAnswer.testId}&testType=${xcTestAnswer.testType}">测试结果列表</a></li>
+		<shiro:hasPermission name="test:xcTestAnswer:edit"><li><a href="${ctx}/test/xcTestAnswer/form?testId=${xcTestAnswer.testId}&testType=${xcTestAnswer.testType}">测试结果添加</a></li></shiro:hasPermission>
 	</ul>
-	<form:form id="searchForm" modelAttribute="xcTestAnswer" action="${ctx}/test/xcTestAnswer/?testId=${xcTestAnswer.testId}" method="post" class="breadcrumb form-search">
+	<form:form id="searchForm" modelAttribute="xcTestAnswer" action="${ctx}/test/xcTestAnswer/?testId=${xcTestAnswer.testId}&testType=${xcTestAnswer.testType}" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<label style="margin-left:20px;">结果关键字：</label>
@@ -40,17 +40,17 @@
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="${page.list}" var="xcTestAnswer">
+		<c:forEach items="${page.list}" var="testAnswer">
 			<tr>
-				<td>${xcTestAnswer.answerKeyword}</td>
-				<td>${xcTestAnswer.answerSketch}</td>
-				<td><c:if test="${xcTestAnswer.answerSketch}">
-					<img src=${xcTestAnswer.answerPic}/>
+				<td>${testAnswer.answerKeyword}</td>
+				<td>${testAnswer.answerSketch}</td>
+				<td><c:if test="${testAnswer.answerSketch}">
+					<img src=${testAnswer.answerPic}/>
 				</c:if></td>
-				<td>${xcTestAnswer.answerPointGt} <label>&nbsp;~&nbsp;</label> ${xcTestAnswer.answerPointLt} </td>
+				<td>${testAnswer.answerPointGt} <label>&nbsp;~&nbsp;</label> ${testAnswer.answerPointLt} </td>
 				<shiro:hasPermission name="test:xcTestAnswer:edit"><td>
-    				<a href="${ctx}/test/xcTestAnswer/form?testId=${xcTestAnswer.testId}&answerId=${xcTestAnswer.answerId}">修改</a>
-					<a href="${ctx}/test/xcTestAnswer/delete?testId=${xcTestAnswer.testId}&answerId=${xcTestAnswer.answerId}" onclick="return confirmx('确认要删除该测试结果吗？', this.href)">删除</a>
+    				<a href="${ctx}/test/xcTestAnswer/form?testId=${xcTestAnswer.testId}&answerId=${testAnswer.answerId}&testType=${xcTestAnswer.testType}">修改</a>
+					<a href="${ctx}/test/xcTestAnswer/delete?testId=${xcTestAnswer.testId}&answerId=${testAnswer.answerId}&testType=${xcTestAnswer.testType}" onclick="return confirmx('确认要删除该测试结果吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>

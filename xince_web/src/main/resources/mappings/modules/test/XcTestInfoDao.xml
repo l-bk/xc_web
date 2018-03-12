@@ -21,7 +21,8 @@
 		a.create_time AS "createTime",
 		a.if_show AS "ifShow",
 		a.test_use_num AS "testUseNum",
-		a.test_logo AS "testLogo"
+		a.test_logo AS "testLogo",
+		a.reward_num AS "rewardNum"
 	</sql>
 	
 	<sql id="xcTestInfoJoins">
@@ -119,6 +120,9 @@
 			<if test="testLogo != null and testLogo != ''">
 				test_logo,
 			</if>
+			<if test="rewardNum != null and rewardNum != ''">
+				reward_num,
+			</if>
 				create_time,
 		</trim>
 		<trim prefix="values(" suffix=")" suffixOverrides=",">
@@ -167,6 +171,9 @@
 			<if test="testLogo != null and testLogo != ''">
 				#{testLogo},
 			</if>
+			<if test="rewardNum != null and rewardNum != ''">
+				#{rewardNum},
+			</if>	
 				now(),
 		</trim>	
 	</insert>
@@ -217,6 +224,9 @@
 			</if>
 			<if test="testUseNum != null and testUseNum !=''">
 				test_use_num = #{testUseNum},
+			</if>
+			<if test="rewardNum != null and rewardNum != ''">
+				reward_num = #{rewardNum},
 			</if>
 		</set>
 		WHERE test_id = #{testId}

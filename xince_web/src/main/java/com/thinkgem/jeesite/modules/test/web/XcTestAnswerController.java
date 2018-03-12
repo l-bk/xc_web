@@ -51,14 +51,17 @@ public class XcTestAnswerController extends BaseController {
 	public String list(XcTestAnswer xcTestAnswer, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<XcTestAnswer> page = xcTestAnswerService.findPage(new Page<XcTestAnswer>(request, response), xcTestAnswer); 
 		model.addAttribute("page", page);
+		model.addAttribute("testType",xcTestAnswer.getTestType());
 		return "modules/test/xcTestAnswerList";
 	}
 
 	@RequiresPermissions("test:xcTestAnswer:view")
 	@RequestMapping(value = "form")
 	public String form(XcTestAnswer xcTestAnswer, Model model) {
+		String testType = xcTestAnswer.getTestType();
 		if(StringUtils.isNotBlank(xcTestAnswer.getAnswerId())){
 			xcTestAnswer=xcTestAnswerService.get(xcTestAnswer.getAnswerId());
+			xcTestAnswer.setTestType(testType);
 		}
 		model.addAttribute("xcTestAnswer", xcTestAnswer);
 		return "modules/test/xcTestAnswerForm";
@@ -72,7 +75,7 @@ public class XcTestAnswerController extends BaseController {
 		}
 		xcTestAnswerService.save(xcTestAnswer);
 		addMessage(redirectAttributes, "保存测试答案成功");
-		return "redirect:"+Global.getAdminPath()+"/test/xcTestAnswer/?repage&testId="+xcTestAnswer.getTestId();
+		return "redirect:"+Global.getAdminPath()+"/test/xcTestAnswer/?repage&testId="+xcTestAnswer.getTestId()+"&testType="+xcTestAnswer.getTestType();
 	}
 	
 	@RequiresPermissions("test:xcTestAnswer:edit")
@@ -80,7 +83,7 @@ public class XcTestAnswerController extends BaseController {
 	public String delete(XcTestAnswer xcTestAnswer, RedirectAttributes redirectAttributes) {
 		xcTestAnswerService.delete(xcTestAnswer);
 		addMessage(redirectAttributes, "删除测试答案成功");
-		return "redirect:"+Global.getAdminPath()+"/test/xcTestAnswer/?repage&testId="+xcTestAnswer.getTestId();
+		return "redirect:"+Global.getAdminPath()+"/test/xcTestAnswer/?repage&testId="+xcTestAnswer.getTestId()+"&testType="+xcTestAnswer.getTestType();
 	}
 
 }

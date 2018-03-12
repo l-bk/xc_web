@@ -7,6 +7,7 @@
 <script type="text/javascript">
 		$(document).ready(function() {
 			//$("#name").focus();
+			alert(${xcTestOptions.testType});
 			$("#inputForm").validate({
 				submitHandler: function(form){
 					loading('正在提交，请稍等...');
@@ -56,35 +57,36 @@
 									
 			}
 			});
+				
 		});
 	</script>
 </head>
 <body>
 	<ul class="nav nav-tabs">
 		<li><a
-			href="${ctx}/test/xcTestOptions/?testQuestionId=${xcTestOptions.testQuestionId}&testId=${xcTestOptions.testId}">测试选项列表</a></li>
+			href="${ctx}/test/xcTestOptions/?testQuestionId=${xcTestOptions.testQuestionId}&testId=${xcTestOptions.testId}&testType=${xcTestOptions.testType}">测试选项列表</a></li>
 		<li class="active"><a
-			href="${ctx}/test/xcTestOptions/form?optionsId=${xcTestOptions.optionsId}&testQuestionId=${xcTestOptions.testQuestionId}&testId=${xcTestOptions.testId}">测试选项<shiro:hasPermission
+			href="${ctx}/test/xcTestOptions/form?optionsId=${xcTestOptions.optionsId}&testQuestionId=${xcTestOptions.testQuestionId}&testId=${xcTestOptions.testId}&testType=${xcTestOptions.testType}">测试选项<shiro:hasPermission
 					name="test:xcTestOptions:edit">${not empty xcTestOptions.id?'修改':'添加'}</shiro:hasPermission>
 				<shiro:lacksPermission name="test:xcTestOptions:edit">查看</shiro:lacksPermission></a></li>
 	</ul>
 	<br />
 	<form:form id="inputForm" modelAttribute="xcTestOptions"
-		action="${ctx}/test/xcTestOptions/save?testQuestionId=${xcTestOptions.testQuestionId}&testId=${testId}"
+		action="${ctx}/test/xcTestOptions/save?testQuestionId=${xcTestOptions.testQuestionId}&testId=${testId}&testType=${xcTestOptions.testType}"
 		method="post" class="form-horizontal">
 		<form:hidden path="optionsId" />
 		<sys:message content="${message}" />
-
-		<div class="control-group" style="border:0px;">
-			<label class="control-label">是否跳题:</label>
-			<div class="controls">
-				<form:radiobutton path="ifSkip" id="noSkip" htmlEscape="false"
-					class="input-xlarge requried" value="0" label="否" />
-				<form:radiobutton path="ifSkip" id="yesSkip" htmlEscape="false"
-					class="input-xlarge requried" value="1" label="是" />
+		<c:if test="${xcTestOptions.testType == '0' }">
+			<div class="control-group" style="border: 0px;">
+				<label class="control-label">是否跳题:</label>
+				<div class="controls">
+					<form:radiobutton path="ifSkip" id="noSkip" htmlEscape="false"
+						class="input-xlarge requried" value="0" label="否" />
+					<form:radiobutton path="ifSkip" id="yesSkip" htmlEscape="false"
+						class="input-xlarge requried" value="1" label="是" />
+				</div>
 			</div>
-		</div>
-
+		</c:if>
 		<div class="control-group" style="display: none;">
 			<label class="control-label">选项序号：</label>
 			<div class="controls">
@@ -93,14 +95,15 @@
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
-		<div class="control-group" style="border:0px;">
+		<div class="control-group" style="border: 0px;">
 			<label class="control-label">选项内容：</label>
 			<div class="controls" id="detailsArea">
 				<form:input path="optionsDetails" htmlEscape="false"
 					class="input-xlarge required" />
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
-			<div class="controls" id="skipArea" style="display: none; margin-top:10px;">
+			<div class="controls" id="skipArea"
+				style="display: none; margin-top: 10px;">
 				<span>跳转到第&nbsp;</span>
 				<form:select path="skipNum" htmlEscape="false"
 					class="input-xlarge required" style="width:120px;">
@@ -112,13 +115,33 @@
 				<span>&nbsp;题</span>
 			</div>
 		</div>
-		<div class="control-group" style="border:0px;">
-			<label class="control-label">选项分数：</label>
-			<div class="controls">
-				<form:input path="optionsPoint" htmlEscape="false"
-					class="input-xlarge " placeholder="输入分数，限制整数"/>
+		<c:if test="${xcTestOptions.testType == '0' }">
+
+			<div class="control-group" style="border: 0px;">
+				<label class="control-label">选项分数：</label>
+				<div class="controls">
+					<form:input path="optionsPoint" htmlEscape="false"
+						class="input-xlarge " placeholder="输入分数，限制整数" />
+				</div>
 			</div>
-		</div>
+		</c:if>
+		<c:if test="${xcTestOptions.testType == '1' }">
+			<div class="control-group" style ="border:0px;">
+				<label class="control-label">跳题： </label>
+				<div class="controls">
+					<span>跳转到第&nbsp;</span>
+					<form:select path="skipNum" htmlEscape="false"
+					class="input-xlarge required" style="width:120px;">
+					<form:option value="0">请选择</form:option>
+					<c:forEach var="item" items="${quesNum}">
+						<form:option value="${item}">${item}</form:option>
+					</c:forEach>
+				</form:select>
+				<span>&nbsp;题</span>
+					
+				</div>
+			</div>
+		</c:if>
 		<div class="form-actions">
 			<shiro:hasPermission name="test:xcTestOptions:edit">
 				<c:if test="${xcTestOptions.optionsId == null }">
