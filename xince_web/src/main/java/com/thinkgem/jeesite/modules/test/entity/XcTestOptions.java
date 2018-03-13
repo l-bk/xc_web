@@ -27,10 +27,13 @@ public class XcTestOptions extends DataEntity<XcTestOptions> {
 	private Integer num;
 	private String ifSkip;
 	private Integer skipQuestionId;
-	private Integer skipNum;
+	
+	private String ifReturn;
+	private Integer returnAnswerId;
 	
 	private String testType;
-	
+	private Integer skipNum;
+	private String answerNum;
 	private String testId;
 	
 	public XcTestOptions() {
@@ -135,6 +138,30 @@ public class XcTestOptions extends DataEntity<XcTestOptions> {
 
 	public void setTestType(String testType) {
 		this.testType = testType;
+	}
+
+	public String getIfReturn() {
+		return ifReturn;
+	}
+
+	public void setIfReturn(String ifReturn) {
+		this.ifReturn = ifReturn;
+	}
+
+	public Integer getReturnAnswerId() {
+		return returnAnswerId;
+	}
+
+	public void setReturnAnswerId(Integer returnAnswerId) {
+		this.returnAnswerId = returnAnswerId;
+	}
+
+	public String getAnswerNum() {
+		return answerNum;
+	}
+
+	public void setAnswerNum(String answerNum) {
+		this.answerNum = answerNum;
 	}
 
 	

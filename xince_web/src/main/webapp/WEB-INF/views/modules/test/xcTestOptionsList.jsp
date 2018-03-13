@@ -6,7 +6,8 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			alert(${xcTestOptions.testType});
+			//alert(${xcTestOptions.ifReturn});
+			
 		});
 		function page(n,s){
 			$("#pageNo").val(n);
@@ -38,31 +39,41 @@
 			<tr>
 				<th>序号</th>
 				<th>选项内容</th>
-				<c:if test="${xcTestOptions.testType == '0' }">
+				<c:if test="${testType=='0'}">
 				<th>分数</th>
 				</c:if>
-				<c:if test="${xcTestOptions.testType == '1' }">
-					<th>跳题</th>
+				<c:if test="${testType=='1'}">
+						<th>跳转</th>
 				</c:if>
 				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="${page.list}" var="testOptions">
+		<c:forEach items="${page.list}" var="xcTestOptions">
 			<tr>
-				<td>${testOptions.optionsKeyword }</td>
+				<td>${xcTestOptions.optionsKeyword }</td>
 				<td>
-					${testOptions.optionsDetails }
+					${xcTestOptions.optionsDetails }
 				</td>
-				<c:if test="${xcTestOptions.testType == '0' }">
-				<td>${testOptions.optionsPoint }</td>
+				<c:if test="${testType == '0' }">
+				<td>${xcTestOptions.optionsPoint}分</td>
 				</c:if>
-				<c:if test="${xcTestOptions.testType == '1' }">
-					<td>${testOptions.skipNum}</td>
+				<c:if test="${testType == '1' }">
+					<c:if test="${xcTestOptions.ifReturn == '0' }">
+						<c:if test="${xcTestOptions.skipNum != null}">
+						<td>跳转到第&nbsp;${xcTestOptions.skipNum}&nbsp;题</td>
+						</c:if>
+					</c:if>
+					<c:if test="${xcTestOptions.ifReturn == '1' }">
+						<c:if test="${xcTestOptions.answerNum != null }">
+						<td>跳转到 &nbsp;${xcTestOptions.answerNum} &nbsp;结果</td>
+						</c:if>
+					</c:if>
+					
 				</c:if>
 				<shiro:hasPermission name="test:xcTestOptions:edit"><td>
-    				<a href="${ctx}/test/xcTestOptions/form?optionsId=${testOptions.optionsId}&testId=${testId}&testType=${xcTestOptions.testType}">修改</a>
-					<a href="${ctx}/test/xcTestOptions/delete?testQuestionId=${testOptions.testQuestionId}&testId=${testId}&optionsId=${testOptions.optionsId}&testType=${xcTestOptions.testType}" onclick="return confirmx('确认要删除该测试选项吗？', this.href)">删除</a>
+    				<a href="${ctx}/test/xcTestOptions/form?optionsId=${xcTestOptions.optionsId}&testId=${testId}&testType=${testType}">修改</a>
+					<a href="${ctx}/test/xcTestOptions/delete?testQuestionId=${xcTestOptions.testQuestionId}&testId=${testId}&optionsId=${testOptions.optionsId}&testType=${testType}" onclick="return confirmx('确认要删除该测试选项吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>

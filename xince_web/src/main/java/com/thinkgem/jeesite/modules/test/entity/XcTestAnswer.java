@@ -29,6 +29,7 @@ public class XcTestAnswer extends DataEntity<XcTestAnswer> {
 	private String testId;		// 测试id
 	private String delFlag;
 	private Date createTime;
+	private String answerNum;
 	
 	private String testType;
 	public XcTestAnswer() {
@@ -134,6 +135,14 @@ public class XcTestAnswer extends DataEntity<XcTestAnswer> {
 
 	public void setTestType(String testType) {
 		this.testType = testType;
+	}
+
+	public String getAnswerNum() {
+		return answerNum;
+	}
+
+	public void setAnswerNum(String answerNum) {
+		this.answerNum = answerNum;
 	}
 	
 	

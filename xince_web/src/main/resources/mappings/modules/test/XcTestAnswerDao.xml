@@ -13,8 +13,9 @@
 		a.answer_QRCode AS "answerQRCode",
 		a.del_flag AS "delFlag",
 		a.test_id AS "testId",
-		a.create_time AS "createTime"
-	</sql>
+		a.create_time AS "createTime",
+		a.answer_num AS "answerNum"
+ 	</sql>
 	
 	<sql id="xcTestAnswerJoins">
 	</sql>
@@ -95,6 +96,9 @@
 			<if test="testId != null and testId != ''">
 				test_id,
 			</if>
+			<if test="answerNum != null and answerNum != ''">
+				answer_num,
+			</if>
 				create_time
 		</trim>
 		<trim prefix="values(" suffix=")" suffixOverrides=",">
@@ -125,6 +129,9 @@
 			<if test="testId != null and testId != ''">
 				#{testId},
 			</if>
+			<if test="answerNum != null and answerNum != ''">
+				#{answerNum},
+			</if>
 				now()
 		</trim>
 	</insert>
@@ -150,7 +157,10 @@
 			</if>
 				answer_QRCode = #{answerQRCode},
 			<if test="testId != null and testId != ''">
-				test_id = #{testId}
+				test_id = #{testId},
+			</if>
+			<if test="answerNum != null and answerNum != ''">
+				answer_num = #{answerNum},
 			</if>
 		</set>
 		WHERE answer_id = #{answerId}

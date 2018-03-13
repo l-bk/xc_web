@@ -18,12 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.adobe.xmp.options.Options;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
 import com.thinkgem.jeesite.common.utils.StringUtils;
+import com.thinkgem.jeesite.modules.test.entity.XcTestAnswer;
 import com.thinkgem.jeesite.modules.test.entity.XcTestOptions;
 import com.thinkgem.jeesite.modules.test.entity.XcTestQuestion;
+import com.thinkgem.jeesite.modules.test.service.XcTestAnswerService;
 import com.thinkgem.jeesite.modules.test.service.XcTestOptionsService;
 import com.thinkgem.jeesite.modules.test.service.XcTestQuestionService;
 
@@ -42,7 +45,8 @@ public class XcTestOptionsController extends BaseController {
 	@Autowired
 	private XcTestQuestionService questionService;
 	
-	
+	@Autowired 
+	private XcTestAnswerService answerService;
 	
 	@ModelAttribute
 	public XcTestOptions get(@RequestParam(required=false) String id) {
@@ -66,6 +70,10 @@ public class XcTestOptionsController extends BaseController {
 			if(option.getSkipQuestionId() != null && !"".equals(option.getSkipQuestionId())){
 				XcTestQuestion ques=questionService.get(String.valueOf(option.getSkipQuestionId()));
 				option.setSkipNum(ques.getQuestionNum());
+			}
+			if(option.getReturnAnswerId() != null && ! "".equals(option.getReturnAnswerId())){
+				XcTestAnswer answer = answerService.get(String.valueOf(option.getReturnAnswerId()));
+				option.setAnswerNum(answer.getAnswerNum());
 			}
 			newList.add(option);
 		}
@@ -100,9 +108,14 @@ public class XcTestOptionsController extends BaseController {
 				quesNum.add(question.getQuestionNum().intValue());
 			}
 		}
+		XcTestAnswer answer= new XcTestAnswer();
+		answer.setTestId(testId);
+		List<XcTestAnswer> answerList = answerService.findList(answer);
+		
 		model.addAttribute("testId",testId);
 		model.addAttribute("quesNum",quesNum);
 		model.addAttribute("xcTestOptions", xcTestOptions);
+		model.addAttribute("answer",answerList);
 		return "modules/test/xcTestOptionsForm";
 	}
 
@@ -112,7 +125,7 @@ public class XcTestOptionsController extends BaseController {
 		if (!beanValidator(model, xcTestOptions)){
 			return form(xcTestOptions, model);
 		}
-		if("1".equals(xcTestOptions.getIfSkip())){
+		if("1".equals(xcTestOptions.getIfSkip()) || "0".equals(xcTestOptions.getIfReturn())){
 			XcTestQuestion xcTestQuestion = questionService.get(xcTestOptions.getTestQuestionId());
 			XcTestQuestion ques= new XcTestQuestion();
 			ques.setTestId(xcTestQuestion.getTestId());

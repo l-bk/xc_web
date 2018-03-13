@@ -6,7 +6,7 @@
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			alert(${xcTestAnswer.testType});
+			//alert(${xcTestAnswer.testType});
 		});
 		function page(n,s){
 			$("#pageNo").val(n);
@@ -32,22 +32,32 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
+				<c:if test="${xcTestAnswer.testType == '1' }">
+					<th>结果序号</th>
+				</c:if>
 				<th>结果关键字</th>
 				<th>简述</th>
 				<th>图片</th>
-				<th>判定条件</th>
+				<c:if test="${xcTestAnswer.testType == '0' }">
+					<th>判定条件</th>
+				</c:if>
 				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>
 		<c:forEach items="${page.list}" var="testAnswer">
 			<tr>
+				<c:if test="${xcTestAnswer.testType =='1' }">
+					<td>${testAnswer.answerNum}</td>
+				</c:if>	
 				<td>${testAnswer.answerKeyword}</td>
 				<td>${testAnswer.answerSketch}</td>
 				<td><c:if test="${testAnswer.answerSketch}">
 					<img src=${testAnswer.answerPic}/>
 				</c:if></td>
-				<td>${testAnswer.answerPointGt} <label>&nbsp;~&nbsp;</label> ${testAnswer.answerPointLt} </td>
+				<c:if test="${xcTestAnswer.testType == '0' }">
+					<td>${testAnswer.answerPointGt} <label>&nbsp;~&nbsp;</label> ${testAnswer.answerPointLt} </td>
+				</c:if>
 				<shiro:hasPermission name="test:xcTestAnswer:edit"><td>
     				<a href="${ctx}/test/xcTestAnswer/form?testId=${xcTestAnswer.testId}&answerId=${testAnswer.answerId}&testType=${xcTestAnswer.testType}">修改</a>
 					<a href="${ctx}/test/xcTestAnswer/delete?testId=${xcTestAnswer.testId}&answerId=${testAnswer.answerId}&testType=${xcTestAnswer.testType}" onclick="return confirmx('确认要删除该测试结果吗？', this.href)">删除</a>

@@ -10,7 +10,9 @@
 		a.test_question_id AS "testQuestionId",
 		a.create_time AS "createTime",
 		a.if_skip AS "ifSkip",
-		a.skip_question_id AS "skipQuestionId"
+		a.skip_question_id AS "skipQuestionId",
+		a.if_return AS "ifReturn",
+		a.return_answer_id AS "returnAnswerId"
 	</sql>
 	
 	<sql id="xcTestOptionsJoins">
@@ -83,6 +85,12 @@
 			<if test="skipQuestionId != null and skipQuestionId != ''">
 				skip_question_id,
 			</if>
+			<if test="ifReturn != null and ifReturn != ''">
+				if_return,
+			</if>
+			<if test="returnAnswerId != null and returnAnswerId != ''">
+				return_answer_id,
+			</if>
 			create_time
 		</trim>
 		<trim prefix="values(" suffix=")" suffixOverrides=",">
@@ -103,6 +111,12 @@
 			</if>
 			<if test="skipQuestionId != null and skipQuestionId != ''">
 				#{skipQuestionId},
+			</if>
+			<if test="ifReturn != null and ifReturn != ''">
+				#{ifReturn},
+			</if>
+			<if test="returnAnswerId != null and returnAnswerId != ''">
+				#{returnAnswerId},
 			</if>
 				now()
 		</trim>
@@ -128,6 +142,12 @@
 			</if>
 			<if test="skipQuestionId != null and skipQuestionId != ''">
 				skip_question_id = #{skipQuestionId},
+			</if>
+			<if test="ifReturn != null and ifReturn != ''">
+				if_return = #{ifReturn},
+			</if>
+			<if test="returnAnswerId != null and returnAnswerId != ''">
+				return_answer_id=#{returnAnswerId},
 			</if>
 		</set>
 		WHERE options_id = #{optionsId}

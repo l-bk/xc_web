@@ -44,6 +44,9 @@ public class XcTestAnswerService extends CrudService<XcTestAnswerDao, XcTestAnsw
 		if(StringUtils.isNotBlank(xcTestAnswer.getAnswerId())){
 			xcTestAnswer.setId(xcTestAnswer.getAnswerId());
 		}
+		if(StringUtils.isNoneBlank(xcTestAnswer.getAnswerNum())){
+			xcTestAnswer.setAnswerNum(xcTestAnswer.getAnswerNum().toUpperCase());
+		}
 		super.save(xcTestAnswer);
 	}
 	

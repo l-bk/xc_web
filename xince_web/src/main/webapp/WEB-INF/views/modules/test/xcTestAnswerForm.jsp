@@ -7,7 +7,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			//$("#name").focus();
-			alert(${xcTestAnswer.testType});
+		//	alert(${xcTestAnswer.testType});
 			$("#inputForm").validate({
 				submitHandler: function(form){
 					loading('正在提交，请稍等...');
@@ -62,7 +62,17 @@
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="xcTestAnswer" action="${ctx}/test/xcTestAnswer/save?testId=${xcTestAnswer.testId}&testType=${xcTestAnswer.testType}" method="post" class="form-horizontal">
 		<form:hidden path="answerId"/>
-		<sys:message content="${message}"/>		
+		<sys:message content="${message}"/>	
+		
+		<c:if test="${xcTestAnswer.testType == '1'}">
+		<div class="control-group">
+			<label class="control-label">结果序号：</label>
+			<div class="controls">
+				<form:input path="answerNum" htmlEscape="false" maxlength="64" class="input-xlarge requried" placeholder="输入序号，例如：A"/>
+			</div>
+		</div>
+		</c:if>
+			
 		<div class="control-group">
 			<label class="control-label">结果关键字：</label>
 			<div class="controls">
