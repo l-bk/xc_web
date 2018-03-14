@@ -159,8 +159,19 @@
 				</div>
 			</div>
 		</c:if>
+		<c:if test="${xcTestOptions.testType == '1' }">
+			<div class="control-group" style="border: 0px;">
+				<label class="control-label">是否跳结果:</label>
+				<div class="controls">
+					<form:radiobutton path="ifReturn" id="noReturn" htmlEscape="false"
+						class="input-xlarge required" value="0" label="否" />
+					<form:radiobutton path="ifReturn" id="yesReturn" htmlEscape="false"
+						class="input-xlarge required" value="1" label="是" />
+				</div>
+			</div>
+		</c:if>
 
-			<div class="control-group" id="returnQues" style="border:0px;">
+			<div class="control-group" id="returnQues" style="border:0px;display:none;">
 				<label class="control-label">跳题：</label>
 				<div class="controls">
 					<form:select path="skipNum" htmlEscape="false"
@@ -173,20 +184,7 @@
 				</div>
 			</div>
 
-		<c:if test="${xcTestOptions.testType == '1' }">
-
-			
-
-			<div class="control-group" style="border: 0px;">
-				<label class="control-label">是否跳结果:</label>
-				<div class="controls">
-					<form:radiobutton path="ifReturn" id="noReturn" htmlEscape="false"
-						class="input-xlarge required" value="0" label="否" />
-					<form:radiobutton path="ifReturn" id="yesReturn" htmlEscape="false"
-						class="input-xlarge required" value="1" label="是" />
-				</div>
-			</div>
-		</c:if>
+		
 		<c:if test="${xcTestOptions.testType == '1' }">
 			<div class="control-group" style="border: 0px; display: none;"
 				id="returnArea">
