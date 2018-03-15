@@ -23,6 +23,47 @@
 					}
 				}
 			});
+			//添加选项按钮 单击事件
+			var arr=new Array("A","B","C","D","E","F","G","H","I","J","k","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z");
+			var num=0;
+			var newTestId="optionA";
+			var newPointId="pointA";
+			var newIfSkip="ifSkipA";
+			var newSkipNum="skipNumA"
+			$("#addOptions").click(function(){
+				newTestId=newTestId.replace(newTestId.charAt(newTestId.length-1),arr[num]); 
+				newPointId = newPointId.replace(newPointId.charAt(newPointId.length-1),arr[num]);
+				newIfSkip = newIfSkip.replace(newIfSkip.charAt(newIfSkip.length-1),arr[num]);
+				newSkipNum = newSkipNum.replace(newSkipNum.charAt(newSkipNum.length-1),arr[num]);
+				var allNum=${allNum};
+				var newStr="<select name=\""+newSkipNum+"\" id=\""+newSkipNum+"\" style=\"margin-left:5px;width:120px;\"><option value=\"0\" >请选择</option>" 
+				for(var i=1;i<allNum+1;i++){
+					newStr += "<option value=\"i\">"+i+"</option>";
+					if(i==allNum){
+						newStr+="</select>";
+					}
+					
+				} 
+				$("#options").append("<div class=\"control-group\" style=\"border:0px;\" > <label class=\"control-label\">"+arr[num]+":</label><div class=\"controls\" ><input type=\"text\"  id=\""+newTestId+"\" class=\"required\" /></div></div>");	
+				
+				num+=1; 
+			});
+
+
+			$("#btnSubmit").click(function(){$("#type").val("keepSave")});
+			$("#btnSave").click(function(){$("#type").val("save")});
+
+			$("#btnSubmit,#btnSave,#btnJustSave").click(function(){
+				var allOptions="";
+				for(var i=0;i<num;i++){
+					newTestId=newTestId.replace(newTestId.charAt(newTestId.length-1),arr[i]); 
+					allOptions += arr[i]+"-"+$("#"+newTestId).val();
+					if(i!= num-1){
+						allOptions += ",";
+					}
+				}
+				$("#AllOptions").val(allOptions); 
+			});	
 		});	
 		
 </script>
@@ -107,47 +148,7 @@
 	</form:form>
 
 <script>
-//添加选项按钮 单击事件
-var arr=new Array("A","B","C","D","E","F","G","H","I","J","k","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z");
-var num=0;
-var newTestId="optionA";
-var newPointId="pointA";
-var newIfSkip="ifSkipA";
-var newSkipNum="skipNumA"
-$("#addOptions").click(function(){
-	newTestId=newTestId.replace(newTestId.charAt(newTestId.length-1),arr[num]); 
-	newPointId = newPointId.replace(newPointId.charAt(newPointId.length-1),arr[num]);
-	newIfSkip = newIfSkip.replace(newIfSkip.charAt(newIfSkip.length-1),arr[num]);
-	newSkipNum = newSkipNum.replace(newSkipNum.charAt(newSkipNum.length-1),arr[num]);
-	var allNum=${allNum};
-	var newStr="<select name=\""+newSkipNum+"\" id=\""+newSkipNum+"\" style=\"margin-left:5px;width:120px;\"><option value=\"0\" >请选择</option>" 
-	for(var i=1;i<allNum+1;i++){
-		newStr += "<option value=\"i\">"+i+"</option>";
-		if(i==allNum){
-			newStr+="</select>";
-		}
-		
-	} 
-	$("#options").append("<div class=\"control-group\" style=\"border:0px;\" > <label class=\"control-label\">"+arr[num]+":</label><div class=\"controls\" ><input type=\"text\"  id=\""+newTestId+"\" class=\"required\" /></div></div>");	
 	
-	num+=1; 
-});
-
-
-$("#btnSubmit").click(function(){$("#type").val("keepSave")});
-$("#btnSave").click(function(){$("#type").val("save")});
-
-$("#btnSubmit,#btnSave,#btnJustSave").click(function(){
-	var allOptions="";
-	for(var i=0;i<num;i++){
-		newTestId=newTestId.replace(newTestId.charAt(newTestId.length-1),arr[i]); 
-		allOptions += arr[i]+"-"+$("#"+newTestId).val();
-		if(i!= num-1){
-			allOptions += ",";
-		}
-	}
-	$("#AllOptions").val(allOptions); 
-});		
 </script>
 </body>
 </html>
