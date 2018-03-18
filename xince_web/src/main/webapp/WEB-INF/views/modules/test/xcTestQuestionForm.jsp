@@ -23,6 +23,75 @@
 					}
 				}
 			});
+			
+			//添加选项按钮 单击事件
+			var arr=new Array("A","B","C","D","E","F","G","H","I","J","k","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z");
+			var num=0;
+			var newTestId="optionA";
+			var newPointId="pointA";
+			var newIfSkip="ifSkipA";
+			var newSkipNum="skipNumA"
+			$("#addOptions").click(function(){
+				newTestId=newTestId.replace(newTestId.charAt(newTestId.length-1),arr[num]); 
+				newPointId = newPointId.replace(newPointId.charAt(newPointId.length-1),arr[num]);
+				newIfSkip = newIfSkip.replace(newIfSkip.charAt(newIfSkip.length-1),arr[num]);
+				newSkipNum = newSkipNum.replace(newSkipNum.charAt(newSkipNum.length-1),arr[num]);
+				var allNum=${allNum};
+				var newStr="<select name=\""+newSkipNum+"\" id=\""+newSkipNum+"\" style=\"margin-left:5px;width:120px;\"><option value=\"0\" >请选择</option>" 
+				for(var i=1;i<allNum+1;i++){
+					newStr += "<option value=\"i\">"+i+"</option>";
+					if(i==allNum){
+						newStr+="</select>";
+					}
+					
+				} 
+				$("#options").append("<div class=\"control-group\" style=\"display:none;\"><input id=\""+newIfSkip+"\" value=\"0\"/></div><div class=\"control-group\" style=\"border:0px;\" > <label class=\"control-label\">"+arr[num]+":</label><div class=\"controls\" ><input type=\"text\"  id=\""+newTestId+"\" class=\"required\" /></div></div><div class=\"controls\" style=\"display:none;\"><lable>跳转到第</lable>"+newStr+"<label style=\"margin-left:5px;\">题</label></div><div class=\"control-group\"style=\"border:0px;\" ><label class=\"control-label\" >分数:</label><div class=\"controls\" style=\"border:0px;\"><input type=\"text\" id=\""+newPointId+"\" value=\"0\" style=\"width:80px;\" class=\"required\"  /></div></div> ");	
+				
+				num+=1; 
+			});
+
+			$("#addSkipOptions").click(function(){
+				newTestId=newTestId.replace(newTestId.charAt(newTestId.length-1),arr[num]); 
+				newPointId = newPointId.replace(newPointId.charAt(newPointId.length-1),arr[num]);
+				newIfSkip = newIfSkip.replace(newIfSkip.charAt(newIfSkip.length-1),arr[num]);
+				newSkipNum = newSkipNum.replace(newSkipNum.charAt(newSkipNum.length-1),arr[num]);
+				var allNum=${allNum};
+				var newStr="<select name=\""+newSkipNum+"\" id=\""+newSkipNum+"\" style=\"margin-left:5px;width:120px;\"><option value=\"0\" >请选择</option>" 
+				for(var i=1;i<allNum+1;i++){
+					newStr += "<option value=\""+i+"\">"+i+"</option>";
+					if(i==allNum){
+						newStr+="</select>";
+					}
+					
+				}
+				$("#options").append("<div class=\"control-group\" style=\"display:none;\"><input id=\""+newIfSkip+"\" value=\"1\"/></div><div class=\"control-group\" style=\"border:0px;\"><label class=\"control-label\">"+arr[num]+":</label><div class=\"controls\" ><input type=\"text\"  id=\""+newTestId+"\" class=\"required\" /></div></div><div class=\"controls\"><lable>跳转到第</lable>"+newStr+"<label style=\"margin-left:5px;\">题</label></div><div class=\"control-group\" style=\"border:0px;margin-top:10px;\"><label class=\"control-label\" >分数:</label><div class=\"controls\"><input type=\"text\" id=\""+newPointId+"\" value=\"0\" class=\"required\" style=\"width:80px;\"  /></div></div> ");	
+				  
+				num+=1; 
+			});
+
+			$("#btnSubmit").click(function(){$("#type").val("keepSave")});
+			$("#btnSave").click(function(){$("#type").val("save")});
+
+			$("#btnSubmit,#btnSave,#btnJustSave").click(function(){
+				var allOptions="";
+				for(var i=0;i<num;i++){
+					newTestId=newTestId.replace(newTestId.charAt(newTestId.length-1),arr[i]); 
+					newPointId = newPointId.replace(newPointId.charAt(newPointId.length-1),arr[i]);
+					newSkipNum = newSkipNum.replace(newSkipNum.charAt(newSkipNum.length-1),arr[i]);
+					newIfSkip = newIfSkip.replace(newIfSkip.charAt(newIfSkip.length-1),arr[i]);
+					var pointValue=$("#"+newPointId).val() == ""?0:$("#"+newPointId).val();
+					if($("#"+newIfSkip).val() == 0){
+							allOptions += arr[i]+"-"+$("#"+newIfSkip).val()+"-"+0+"-"+pointValue+"-"+$("#"+newTestId).val();
+					}else if($("#"+newIfSkip).val()==1){
+							allOptions += arr[i]+"-"+$("#"+newIfSkip).val()+"-"+$("#"+newSkipNum).val()+"-"+pointValue+"-"+$("#"+newTestId).val();
+					}
+						
+					if(i!= num-1){
+						allOptions += ",";
+					}
+				}
+				$("#AllOptions").val(allOptions); 
+			});	
 		});	
 		
 </script>
@@ -117,74 +186,7 @@
 	</form:form>
 
 <script>
-//添加选项按钮 单击事件
-var arr=new Array("A","B","C","D","E","F","G","H","I","J","k","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z");
-var num=0;
-var newTestId="optionA";
-var newPointId="pointA";
-var newIfSkip="ifSkipA";
-var newSkipNum="skipNumA"
-$("#addOptions").click(function(){
-	newTestId=newTestId.replace(newTestId.charAt(newTestId.length-1),arr[num]); 
-	newPointId = newPointId.replace(newPointId.charAt(newPointId.length-1),arr[num]);
-	newIfSkip = newIfSkip.replace(newIfSkip.charAt(newIfSkip.length-1),arr[num]);
-	newSkipNum = newSkipNum.replace(newSkipNum.charAt(newSkipNum.length-1),arr[num]);
-	var allNum=${allNum};
-	var newStr="<select name=\""+newSkipNum+"\" id=\""+newSkipNum+"\" style=\"margin-left:5px;width:120px;\"><option value=\"0\" >请选择</option>" 
-	for(var i=1;i<allNum+1;i++){
-		newStr += "<option value=\"i\">"+i+"</option>";
-		if(i==allNum){
-			newStr+="</select>";
-		}
-		
-	} 
-	$("#options").append("<div class=\"control-group\" style=\"display:none;\"><input id=\""+newIfSkip+"\" value=\"0\"/></div><div class=\"control-group\" style=\"border:0px;\" > <label class=\"control-label\">"+arr[num]+":</label><div class=\"controls\" ><input type=\"text\"  id=\""+newTestId+"\" class=\"required\" /></div></div><div class=\"controls\" style=\"display:none;\"><lable>跳转到第</lable>"+newStr+"<label style=\"margin-left:5px;\">题</label></div><div class=\"control-group\"style=\"border:0px;\" ><label class=\"control-label\" >分数:</label><div class=\"controls\" style=\"border:0px;\"><input type=\"text\" id=\""+newPointId+"\" value=\"0\" style=\"width:80px;\" class=\"required\"  /></div></div> ");	
 	
-	num+=1; 
-});
-
-$("#addSkipOptions").click(function(){
-	newTestId=newTestId.replace(newTestId.charAt(newTestId.length-1),arr[num]); 
-	newPointId = newPointId.replace(newPointId.charAt(newPointId.length-1),arr[num]);
-	newIfSkip = newIfSkip.replace(newIfSkip.charAt(newIfSkip.length-1),arr[num]);
-	newSkipNum = newSkipNum.replace(newSkipNum.charAt(newSkipNum.length-1),arr[num]);
-	var allNum=${allNum};
-	var newStr="<select name=\""+newSkipNum+"\" id=\""+newSkipNum+"\" style=\"margin-left:5px;width:120px;\"><option value=\"0\" >请选择</option>" 
-	for(var i=1;i<allNum+1;i++){
-		newStr += "<option value=\""+i+"\">"+i+"</option>";
-		if(i==allNum){
-			newStr+="</select>";
-		}
-		
-	}
-	$("#options").append("<div class=\"control-group\" style=\"display:none;\"><input id=\""+newIfSkip+"\" value=\"1\"/></div><div class=\"control-group\" style=\"border:0px;\"><label class=\"control-label\">"+arr[num]+":</label><div class=\"controls\" ><input type=\"text\"  id=\""+newTestId+"\" class=\"required\" /></div></div><div class=\"controls\"><lable>跳转到第</lable>"+newStr+"<label style=\"margin-left:5px;\">题</label></div><div class=\"control-group\" style=\"border:0px;margin-top:10px;\"><label class=\"control-label\" >分数:</label><div class=\"controls\"><input type=\"text\" id=\""+newPointId+"\" value=\"0\" class=\"required\" style=\"width:80px;\"  /></div></div> ");	
-	  
-	num+=1; 
-});
-
-$("#btnSubmit").click(function(){$("#type").val("keepSave")});
-$("#btnSave").click(function(){$("#type").val("save")});
-
-$("#btnSubmit,#btnSave,#btnJustSave").click(function(){
-	var allOptions="";
-	for(var i=0;i<num;i++){
-		newTestId=newTestId.replace(newTestId.charAt(newTestId.length-1),arr[i]); 
-		newPointId = newPointId.replace(newPointId.charAt(newPointId.length-1),arr[i]);
-		newSkipNum = newSkipNum.replace(newSkipNum.charAt(newSkipNum.length-1),arr[i]);
-		newIfSkip = newIfSkip.replace(newIfSkip.charAt(newIfSkip.length-1),arr[i]);
-		var pointValue=$("#"+newPointId).val() == ""?0:$("#"+newPointId).val();
-		if($("#"+newIfSkip).val() == 0){
-				allOptions += arr[i]+"-"+$("#"+newIfSkip).val()+"-"+0+"-"+pointValue+"-"+$("#"+newTestId).val();
-		}else if($("#"+newIfSkip).val()==1){
-				allOptions += arr[i]+"-"+$("#"+newIfSkip).val()+"-"+$("#"+newSkipNum).val()+"-"+pointValue+"-"+$("#"+newTestId).val();
-		}
-			
-		if(i!= num-1){
-			allOptions += ",";
-		}
-	}
-	$("#AllOptions").val(allOptions); 
-});		
 </script>
 </body>
 </html>
