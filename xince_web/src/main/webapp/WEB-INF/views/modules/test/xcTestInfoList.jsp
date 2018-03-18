@@ -36,6 +36,7 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
+				<th>测试ID</th>
 				<th>测试主题</th>
 				<th>logo</th>
 				<th>图片</th>	
@@ -47,6 +48,7 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="xcTestInfo">
 			<tr>
+				<td>${xcTestInfo.testId}</td>
 				<td>${xcTestInfo.testSubject }</td>
 				<td>
 					<c:if test="${xcTestInfo.testLogo != null }">
